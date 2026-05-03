@@ -1,0 +1,36 @@
+services:
+  flask_app:
+    build: ./app
+    container_name: flask_service
+    restart: always
+    privileged: true
+    network_mode: "host"
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      # Permessi per journalctl
+      - /var/log/journal:/var/log/journal:ro
+      - /run/systemd/journal/socket:/run/systemd/journal/socket
+      #vcgencmd
+      - /usr/bin/vcgencmd:/usr/bin/vcgencmd
+      - /usr/lib/aarch64-linux-gnu:/usr/lib/aarch64-linux-gnu:ro
+      # Permessi per UFW
+      - /etc/ufw:/etc/ufw:ro
+      - /lib/modules:/lib/modules:ro
+      - /usr/sbin/iptables:/usr/sbin/iptables
+      - /usr/sbin/ip6tables:/usr/sbin/ip6tables
+    devices:
+      - "/dev/vchiq:/dev/vchiq"
+  
+  flask_music:
+    build: ./music
+    container_name: music_service
+    restart: always
+    network_mode: "host"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - MUSIC_DIR=/music
+    volumes:
+      - /home/zakkmccrack/Music/Musica:/music:ro
+      - ./data/playlists.json:/data/playlists.json

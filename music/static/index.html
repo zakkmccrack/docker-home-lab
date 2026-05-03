@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The very cool people web Player</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <div id="app">
+        <div id="player-bar" onclick="showBigPicture()">
+            <div class="song-controls">
+                <div id="player-info">
+                    <span id="now-title">Nessun brano</span>
+                    <span id="now-artist"></span>
+                </div>
+                <div id="player-controls">
+                    <button id="btn-random">⤨</button>
+                    <button id="btn-prev">⏮</button>
+                    <button id="btn-play">▶</button>
+                    <button id="btn-next">⏭</button>
+                </div>
+            </div>
+            <div class="audio-controls">
+                <div id="player-progress">
+                    <span id="time-current">0:00</span>
+                    <input type="range" id="seekbar" value="0" min="0" step="1">
+                    <span id="time-total">0:00</span>
+                </div>
+                <div id="player-volume">
+                    <span>🔊</span>
+                    <input type="range" id="volumebar" value="100" min="0" max="100">
+                </div>
+            </div>
+        </div>
+
+        <div id="home">
+            <p class="home-label">Library</p>
+            <div id="home-buttons">
+                <button onclick="goMainPage()"><span>♫</span> All Songs</button>
+                <button onclick="goAlbumPage()"><span>◉</span> Albums</button>
+                <button onclick="goPlaylistsPage()"><span>☰</span> Playlists</button>
+                <hr>
+                <button onclick="goSearchPage()"><span>⌕</span> Search</button>
+                <button onclick="goCreatePlaylistPage()"><span>+</span> Create Playlist</button>
+
+                <!-- <button onclick="goSettings()"><span>⚙</span> Settings - Empty</button> -->
+            </div>
+        </div>
+
+        <div id="all-player">
+            <div id="library">
+                <div id="library-header">
+                    <button class="home-button" onclick="goHomePage();">Home</button>
+                    <button data-nav="search" class="search-page-button" onclick="goSearchPage()">Search</button>
+                    <button data-nav="albums" class="album-page-button" onclick="goAlbumPage()">Albums</button>
+                    <button data-nav="playlists" class=" playlist-page-button"
+                        onclick="goPlaylistsPage()">Playlists</button>
+                    <button data-nav="home" class="main-page-button" onclick="goMainPage()">Main Page</button>
+                </div>
+                <div id="songs-number">
+
+                </div>
+                <table id="song-table">
+                    <thead>
+                        <tr>
+                            <th><button onclick="orderByTitle()" id="title-col">Titolo</button></th>
+                            <th><button onclick="orderByArtist()" id="artist-col">Artista</button></th>
+                            <th><button onclick="orderByAlbum()" id="album-col">Album</button></th>
+                            <th><button onclick="orderByTime()" id="duration-col">Durata</button></th>
+                        </tr>
+                    </thead>
+                    <tbody id="song-list">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="albums">
+            <div id="library">
+                <div id="library-header">
+                    <button class="home-button" onclick="goHomePage();">Home</button>
+                    <button data-nav="search" class="search-page-button" onclick="goSearchPage()">Search</button>
+                    <button data-nav="albums" class="album-page-button" onclick="goAlbumPage()">Albums</button>
+                    <button data-nav="playlists" class=" playlist-page-button"
+                        onclick="goPlaylistsPage()">Playlists</button>
+                    <button data-nav="home" class="main-page-button" onclick="goMainPage()">Main Page</button>
+                </div>
+                <input type="text" class="search" id="album-search" placeholder="Cerca Album">
+
+                <div id="albums-list">
+
+                </div>
+            </div>
+        </div>
+
+        <div id="playlists">
+            <div id="library">
+                <div id="library-header">
+                    <button class="home-button" onclick="goHomePage();">Home</button>
+                    <button data-nav="search" class="search-page-button" onclick="goSearchPage()">Search</button>
+                    <button data-nav="albums" class="album-page-button" onclick="goAlbumPage()">Albums</button>
+                    <button data-nav="playlists" class=" playlist-page-button"
+                        onclick="goPlaylistsPage()">Playlists</button>
+                    <button data-nav="home" class="main-page-button" onclick="goMainPage()">Main Page</button>
+                </div>
+                <input type="text" class="search" id="playlist-search" placeholder="Cerca">
+                <div id="playlists-list">
+
+                </div>
+            </div>
+        </div>
+
+        <div id="search_tab">
+            <div id="library">
+                <div id="library-header">
+                    <button class="home-button" onclick="goHomePage();">Home</button>
+                    <button data-nav="search" class="search-page-button" onclick="goSearchPage()">Search</button>
+                    <button data-nav="albums" class="album-page-button" onclick="goAlbumPage()">Albums</button>
+                    <button data-nav="playlists" class=" playlist-page-button"
+                        onclick="goPlaylistsPage()">Playlists</button>
+                    <button data-nav="home" class="main-page-button" onclick="goMainPage()">Main Page</button>
+                </div>
+                <input type="text" class="search" id="search" placeholder="Cerca">
+                <div id="songs-number-serach">
+
+                </div>
+                <table id="song-table">
+                    <tbody id="search-list">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="create-playlist">
+            
+        </div>
+
+        <div id="settings">
+            <div id="library-header">
+                <button class="album-page-button" onclick="goAlbumPage();">Albums</button <button
+                    onclick="goMainPage()">Main Page</button>
+            </div>
+        </div>
+    </div>
+    <audio id="audio-engine"></audio>
+    <script src="/static/player.js"></script>
+    <script src="/static/general.js"></script>
+
+</body>
+
+</html>

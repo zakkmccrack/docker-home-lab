@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Raspberry Monitor 22</title>
+  <style>
+    * {
+      margin: 0;
+    }
+
+    .container {
+      margin: auto;
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 90%;
+    }
+
+    .small_stats {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    .stats {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    @media screen and (max-width: 750px) {
+      .stats {
+        flex-direction: column;
+      }
+
+      .small_stats {
+        flex-direction: column;
+        font-size: larger;
+      }
+    }
+
+    .stats-elements {
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border: 2px solid black;
+      margin: 10px;
+      margin: 0;
+    }
+
+    .stats-elements>* {
+      width: 100%;
+      height: 100%;
+      font-size: large;
+    }
+
+    #kernel,
+    #ufw {
+      overflow-y: scroll;
+      max-height: 50vh;
+    }
+
+    .log>h2 {
+      border-bottom: 2px solid black;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Raspberry Pi Monitor Finale</h1>
+
+    <div class="stats">
+      <div class="small_stats">
+        <div class="stats-elements">
+          <h2>Cpu usage</h2>
+          <p id="cpu"></p>
+        </div>
+
+        <div class="stats-elements">
+          <h2>Disk usage</h2>
+          <p id="disk"></p>
+        </div>
+
+        <div class="stats-elements">
+          <h2>Ram usage</h2>
+          <p id="ram_perc"></p>
+        </div>
+
+        <div class="stats-elements">
+          <h2>Temperature</h2>
+          <p id="temp"></p>
+        </div>
+      </div>
+      <div class="stats-elements log">
+        <h2>Kernel</h2>
+        <div class="kernel-tab">
+          <button onclick="kernel()">Aggiorna</button>
+          <pre id="kernel"></pre>
+        </div>
+      </div>
+
+      <div class="stats-elements log">
+        <h2>UFW status</h2>
+        <pre id="ufw"></pre>
+      </div>
+    </div>
+
+
+  </div>
+
+  <script>
+    async function cpu() {
+      const res = await fetch("/stats/api/cpu");
+      const data = await res.json();
+      document.getElementById("cpu").textContent = data + "%";
+      document.getElementById("cpu").style.backgroundColor = (data > 1.3) ? 'red' : 'green';
+    }
+
+    async function ram() {
+      const res = await fetch("/stats/api/ram");
+      const data = await res.json();
+      document.getElementById("ram_perc").textContent = data.virtual_memory_percent + "%"
+      document.getElementById("ram_perc").style.backgroundColor = (data > 60) ? 'red' : 'green';
+    }
+
+    async function temp() {
+      const res = await fetch("/stats/api/temp");
+      const data = await res.json();
+      document.getElementById("temp").textContent = data + "°"
+      document.getElementById("temp").style.backgroundColor = (data > 40) ? ((data > 70) ? 'red' : "yellow") : 'green';
+    }
+
+    async function disk() {
+      const res = await fetch("/stats/api/disk");
+      const data = await res.json();
+      document.getElementById("disk").textContent = data + "%"
+      document.getElementById("disk").style.backgroundColor = (data > 0.2) ? 'red' : 'green';
+    }
+
+    async function kernel() {
+      const res = await fetch("/stats/api/kernel");
+      const data = await res.json();
+      document.getElementById("kernel").textContent = data
+    }
+
+    async function ufw_status() {
+      const res = await fetch("/stats/api/ufw_status");
+      const data = await res.json();
+      document.getElementById("ufw").textContent = data
+    }
+    ufw_status();
+    kernel();
+
+
+    setInterval(disk, 1000);
+    setInterval(temp, 1000);
+    setInterval(ram, 1000);
+    setInterval(cpu, 1000);
+
+    disk();
+    temp();
+    ram();
+    cpu();
+
+
+  </script>
+</body>
+
+</html>
