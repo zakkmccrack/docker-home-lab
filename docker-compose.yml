@@ -22,7 +22,7 @@ services:
       - /usr/sbin/ip6tables:/usr/sbin/ip6tables
     devices:
       - "/dev/vchiq:/dev/vchiq"
-  
+
   flask_music:
     build: ./music
     container_name: music_service
@@ -32,5 +32,7 @@ services:
       - PYTHONUNBUFFERED=1
       - MUSIC_DIR=/music
     volumes:
+      #path alla cartella locale con tutti gli artisti/album/canzoni
       - /home/zakkmccrack/Music/Musica:/music:ro
+      #file delle playlist montato a runtime
       - ./data/playlists.json:/data/playlists.json

@@ -17,7 +17,7 @@ function goAlbumPage() { renderTree(); showPage('albums', 'albums'); }
 function goPlaylistsPage() { loadPlaylists(); showPage('playlists', 'playlists'); }
 function goSearchPage() { showPage('search_tab', 'search'); }
 function goSettings() { showPage('settings'); }
-function goCreatePlaylistPage() { showPage('create-playlist'); }
+function goCreatePlaylistPage() { loadSongSelection(); showPage('create-playlist'); }
 
 function showBigPicture() { console.log("picture grandeee"); }
 

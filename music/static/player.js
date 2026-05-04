@@ -22,6 +22,9 @@ const album_search = document.getElementById("album-search");
 const songsNumber = document.getElementById("songs-number");
 const songsNumberSearch = document.getElementById("songs-number-serach");
 
+const playlistForm = document.getElementById("playlist-form");
+
+
 let library = [];
 let filtered = [];
 
@@ -51,7 +54,7 @@ function fmt(seconds) {
 }
 
 
-// --- Libreria ---
+// --- Library ---
 
 async function loadLibrary() {
   const res = await fetch("/api/songs");
@@ -177,6 +180,29 @@ function renderPlaylists() {
   });
 }
 
+/*
+
+CHANGE INTO CHECKBOX?
+
+*/
+function loadSongSelection() {
+  selectBox = document.getElementById("song-selection");
+  const fragment = document.createDocumentFragment();
+
+  library.forEach((song, i) => {
+    const optionBox = document.createElement("option");
+    const filepathOriginal = song.filepath;
+    optionBox.value = (filepathOriginal.replace("/music", ''));
+    optionBox.textContent = song.title;
+    fragment.appendChild(optionBox);
+  });
+  selectBox.appendChild(fragment);
+}
+
+playlistForm.addEventListener("submit", async (e) => {
+
+})
+
 
 // --- Queue ---
 
@@ -195,30 +221,9 @@ function populateQueue(indexInFiltered) {
 }
 
 
-// --- Search ---
-
-search.addEventListener("input", () => {
-  const q = search.value.toLowerCase();
-  filtered = library.filter(
-    (s) =>
-      s.title.toLowerCase().includes(q) ||
-      s.artist.toLowerCase().includes(q) ||
-      s.album.toLowerCase().includes(q),
-  );
-  renderSearchList();
-});
-
-album_search.addEventListener("input", () => {
-  // const q = search.value.toLowerCase();
-  // filtered = tree.filter(s =>
-  //     s.artist.toLowerCase().includes(q) ||
-  //     s.album.toLowerCase().includes(q)
-  // );
-  // renderTree();
-});
-
-
 // --- Player ---
+
+// DO BETTER
 
 function playSong(indexInFiltered) {
   if (queue[0] == null || (currentQueueIndex == queue.length - 1 && !isPlaylist) || (currentQueueIndex == queue.length && isPlaylist)) {
@@ -248,6 +253,20 @@ function playSong(indexInFiltered) {
     btnPlay.textContent = "⏸";
     highlightRow();
     document.title = songDataFromPath.title + " - " + songDataFromPath.artist;
+  }
+}
+
+function playNext() {
+  currentQueueIndex++;
+  if (isAlbum) {
+    queue[queue.length] = queue[currentQueueIndex];
+  }
+  console.log(queue)
+  if (!randomize) {
+    if (currentQueueIndex < max) playSong(currentQueueIndex + 1);
+    else btnPlay.textContent = "▶";
+  } else {
+    playSong(currentQueueIndex + 1);
   }
 }
 
@@ -288,6 +307,30 @@ function selectFilteredSong(songNameInFiltered) {
 }
 
 
+// --- Search ---
+
+search.addEventListener("input", () => {
+  const q = search.value.toLowerCase();
+  filtered = library.filter(
+    (s) =>
+      s.title.toLowerCase().includes(q) ||
+      s.artist.toLowerCase().includes(q) ||
+      s.album.toLowerCase().includes(q),
+  );
+  renderSearchList();
+});
+
+album_search.addEventListener("input", () => {
+  // const q = search.value.toLowerCase();
+  // filtered = tree.filter(s =>
+  //     s.artist.toLowerCase().includes(q) ||
+  //     s.album.toLowerCase().includes(q)
+  // );
+  // renderTree();
+});
+
+//  --- GUI Functions --
+
 function highlightRow() {
   document
     .querySelectorAll("#song-list tr")
@@ -295,20 +338,6 @@ function highlightRow() {
   const rows = document.querySelectorAll("#song-list tr");
   if (rows[queue[currentQueueIndex]])
     rows[queue[currentQueueIndex]].classList.add("active");
-}
-
-function playNext() {
-  currentQueueIndex++;
-  if (isAlbum) {
-    queue[queue.length] = queue[currentQueueIndex];
-  }
-  console.log(queue)
-  if (!randomize) {
-    if (currentQueueIndex < max) playSong(currentQueueIndex + 1);
-    else btnPlay.textContent = "▶";
-  } else {
-    playSong(currentQueueIndex + 1);
-  }
 }
 
 btnPlay.addEventListener("click", () => {
@@ -339,7 +368,7 @@ btnRandom.addEventListener("click", () => {
 });
 
 
-// Autoplay brano successivo
+// Autoplay next track
 audio.addEventListener("ended", () => {
   playNext();
 });
@@ -366,7 +395,7 @@ volumebar.addEventListener("input", () => {
 });
 
 
-// -- Filters --
+// -- Filters (non funzionano per ora)--
 
 function orderByTitle() {
   filtered.sort((a, b) => a.album.localeCompare(b.album) || a.title_full.localeCompare(b.title_full))
