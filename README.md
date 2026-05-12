@@ -2,7 +2,7 @@
 
 si basa su una SPA gestita con js e robe varie, niente di che.
 Eseguirla in locale così comè non funzionerà visto che serve settare la cartella dalla quale prendere le canozni.
-Il backend potrebbe essere un casino visto che non ho quanta esperienza con python.
+Il backend potrebbe essere un casino visto che non ho chissà quanta esperienza con python.
 
 ## avvio
 
