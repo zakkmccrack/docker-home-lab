@@ -254,19 +254,28 @@ Album Page
 }
 
 .album-div {
-    padding: 14px 16px;
-    background: #1a1a1a;
     border: 0.5px solid #3a3a3a;
     border-radius: 12px;
     cursor: pointer;
     transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
     overflow: hidden;
+    aspect-ratio: 1/1;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .album-div:hover {
     background: #222;
     border-color: #555;
     transform: translateY(-2px);
+}
+
+.album-data {
+    width: 100%;
+    height: fit-content;
+    padding: 14px;
+    background-color: #121212dc;
 }
 
 .album-name-div {
@@ -277,6 +286,7 @@ Album Page
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    text-wrap: wrap;
 }
 
 .album-artist-name-div {
@@ -285,6 +295,7 @@ Album Page
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    text-wrap: wrap;
 }
 
 

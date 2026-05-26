@@ -132,6 +132,10 @@ function renderTree() {
 
       const bandName = artist;
 
+      const divData = document.createElement("div");
+      divData.classList.add("album-data");
+
+
       const divArtistName = document.createElement("div");
       divArtistName.classList.add("album-artist-name-div");
       divArtistName.textContent = bandName;
@@ -139,9 +143,13 @@ function renderTree() {
       const divAlbumName = document.createElement("div");
       divAlbumName.classList.add("album-name-div");
       divAlbumName.textContent = albumName[0];
+      
+      divData.appendChild(divAlbumName);
+      divData.appendChild(divArtistName);
 
-      div.appendChild(divAlbumName);
-      div.appendChild(divArtistName);
+      div.appendChild(divData)
+
+      div.style.backgroundImage = `url('/music/api/cover/${bandName}/${albumName[0]}/cover.jpg?size=300')`
 
       div.addEventListener("click", () => playAlbum(i, albumName[0]));
 

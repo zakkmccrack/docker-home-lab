@@ -3,8 +3,12 @@ from pathlib import Path
 from flask import Flask, jsonify, send_file, abort, send_from_directory, request
 from mutagen.mp3 import MP3
 from mutagen.id3 import ID3, TIT2, TPE1, TALB
-from mutagen.flac import FLAC
+from mutagen.flac import FLAC, Picture
 import json
+from PIL import Image
+import io
+from functools import lru_cache
+
 from datetime import date
 
 app = Flask(__name__)
@@ -82,6 +86,13 @@ def scan_library(music_dir_passed):
 
                 library_tree[artist][album].append(meta)
     return songs, library_tree
+
+@lru_cache(maxsize=512)
+def get_album_cover(path):
+    parentPath = os.path.dirname(path)
+    stringToPath = Path(parentPath)
+    result = next(stringToPath.rglob("*.jpg"), None)
+    return result
 
 
 # --- Utility playlist ---
@@ -240,6 +251,22 @@ def remove_song(playlist_id):
 @app.route("/api/tree")
 def tree():
     return jsonify(library_tree)
+
+
+@app.route("/api/cover/<path:filename>")
+def getImage(filename):
+    full_path = Path(MUSIC_DIR) / filename
+    cover = get_album_cover(full_path)
+    size = request.args.get("size", type=int)  # es. /api/cover/...?size=300
+    
+    if size:
+        img = Image.open(cover)
+        img.thumbnail((size, size))
+        buf = io.BytesIO()
+        img.save(buf, format="JPEG", quality=85)
+        buf.seek(0)
+        return send_file(buf, mimetype="image/jpeg")
+    return send_from_directory(str(cover.parent), cover.name)
 
 
 library, library_tree = scan_library(MUSIC_DIR)
