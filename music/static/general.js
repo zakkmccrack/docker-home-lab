@@ -1,4 +1,4 @@
-const PAGES = ['home', 'all-player', 'albums', 'playlists', 'search_tab', 'settings', 'create-playlist'];
+const PAGES = ['home', 'all-player', 'albums', 'playlists', 'search_tab', 'settings', 'create-playlist', 'big-picture'];
 
 function showPage(pageId, activeNavId = null) {
     PAGES.forEach(id => {
@@ -19,6 +19,6 @@ function goSearchPage() { showPage('search_tab', 'search'); }
 function goSettings() { showPage('settings'); }
 function goCreatePlaylistPage() { loadSongSelection(); showPage('create-playlist'); }
 
-function showBigPicture() { console.log("picture grandeee"); }
+function showBigPicture() { loadBigPicture(); showPage('big-picture'); }
 
 goHomePage();

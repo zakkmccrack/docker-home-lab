@@ -126,11 +126,20 @@ function renderTree() {
   albumList.innerHTML = "";
 
   treeFiltered.forEach(([artist, albums], i) => {
+    const artistDiv = document.createElement("div");
+    const artistTitle = document.createElement("h2");
+    artistDiv.classList.add("artist-title-div");
+    const bandName = artist;
+    artistTitle.textContent = bandName;
+
+    artistDiv.appendChild(artistTitle);
+
+    albumList.appendChild(artistDiv)
+
     Object.entries(albums).forEach((albumName, j) => {
       const div = document.createElement("div");
       div.classList.add("album-div");
 
-      const bandName = artist;
 
       const divData = document.createElement("div");
       divData.classList.add("album-data");
@@ -143,13 +152,15 @@ function renderTree() {
       const divAlbumName = document.createElement("div");
       divAlbumName.classList.add("album-name-div");
       divAlbumName.textContent = albumName[0];
-      
+
       divData.appendChild(divAlbumName);
       divData.appendChild(divArtistName);
 
       div.appendChild(divData)
 
-      div.style.backgroundImage = `url('/music/api/cover/${bandName}/${albumName[0]}/cover.jpg?size=300')`
+      const url = (`/music/api/cover/${encodeURIComponent(bandName)}/${encodeURIComponent(albumName[0])}/cover.jpg?size=300`).replace("'", "%27").replace("(", "%28").replace(")", "%29")
+
+      div.style.backgroundImage = `url(${url})`
 
       div.addEventListener("click", () => playAlbum(i, albumName[0]));
 
@@ -338,6 +349,10 @@ album_search.addEventListener("input", () => {
 });
 
 //  --- GUI Functions --
+
+function loadBigPicture() {
+  alert("big picture");
+}
 
 function highlightRow() {
   document

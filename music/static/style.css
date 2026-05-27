@@ -91,12 +91,12 @@ body {
 }
 
 #library-header button:hover {
-    color: #000;
+    color: #4e4e4e;
 }
 
 #library-header button.active {
-    color: #000;
-    border-bottom-color: #000;
+    color: #ffffff;
+    border-bottom-color: #ffffff;
     font-weight: 500;
 }
 
@@ -249,13 +249,12 @@ Album Page
     width: 100%;
     height: fit-content;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 32px;
 }
 
 .album-div {
     border: 0.5px solid #3a3a3a;
-    border-radius: 12px;
     cursor: pointer;
     transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
     overflow: hidden;
@@ -298,6 +297,11 @@ Album Page
     text-wrap: wrap;
 }
 
+.artist-title-div{
+    padding-top: 30px;
+    grid-column: 1/-1;
+}
+
 
 
 @media only screen and (max-width: 768px) {
@@ -319,5 +323,13 @@ Album Page
 
     .audio-controls {
         display: block;
+    }
+
+    #albums-list {
+        width: 100%;
+        height: fit-content;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 12px;
     }
 }

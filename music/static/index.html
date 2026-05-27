@@ -46,19 +46,22 @@
                 <button onclick="goSearchPage()"><span>⌕</span> Search</button>
                 <button onclick="goCreatePlaylistPage()"><span>+</span> Create Playlist</button>
 
-                <!-- <button onclick="goSettings()"><span>⚙</span> Settings - Empty</button> -->
+                <button onclick="goSettings()"><span>⚙</span> Settings - Empty</button>
             </div>
         </div>
+
+
 
         <div id="all-player">
             <div id="library">
                 <div id="library-header">
                     <button class="home-button" onclick="goHomePage();">Home</button>
-                    <button data-nav="search" class="search-page-button" onclick="goSearchPage()">Search</button>
+                    <button data-nav="home" class="main-page-button" onclick="goMainPage()">Main Page</button>
                     <button data-nav="albums" class="album-page-button" onclick="goAlbumPage()">Albums</button>
                     <button data-nav="playlists" class=" playlist-page-button"
                         onclick="goPlaylistsPage()">Playlists</button>
-                    <button data-nav="home" class="main-page-button" onclick="goMainPage()">Main Page</button>
+                    <button data-nav="albums" class="album-page-button" onclick="showBigPicture()">Big Picture</button>
+                    <button data-nav="search" class="search-page-button" onclick="goSearchPage()">Search</button>
                 </div>
                 <div id="songs-number">
 
@@ -83,11 +86,12 @@
             <div id="library">
                 <div id="library-header">
                     <button class="home-button" onclick="goHomePage();">Home</button>
-                    <button data-nav="search" class="search-page-button" onclick="goSearchPage()">Search</button>
+                    <button data-nav="home" class="main-page-button" onclick="goMainPage()">Main Page</button>
                     <button data-nav="albums" class="album-page-button" onclick="goAlbumPage()">Albums</button>
                     <button data-nav="playlists" class=" playlist-page-button"
                         onclick="goPlaylistsPage()">Playlists</button>
-                    <button data-nav="home" class="main-page-button" onclick="goMainPage()">Main Page</button>
+                    <button data-nav="big-picture" class="big-picture-page-button" onclick="showBigPicture()">Big Picture</button>
+                    <button data-nav="search" class="search-page-button" onclick="goSearchPage()">Search</button>
                 </div>
                 <input type="text" class="search" id="album-search" placeholder="Cerca Album">
 
@@ -101,11 +105,12 @@
             <div id="library">
                 <div id="library-header">
                     <button class="home-button" onclick="goHomePage();">Home</button>
-                    <button data-nav="search" class="search-page-button" onclick="goSearchPage()">Search</button>
+                    <button data-nav="home" class="main-page-button" onclick="goMainPage()">Main Page</button>
                     <button data-nav="albums" class="album-page-button" onclick="goAlbumPage()">Albums</button>
                     <button data-nav="playlists" class=" playlist-page-button"
                         onclick="goPlaylistsPage()">Playlists</button>
-                    <button data-nav="home" class="main-page-button" onclick="goMainPage()">Main Page</button>
+                    <button data-nav="big-picture" class="big-picture-page-button" onclick="showBigPicture()">Big Picture</button>
+                    <button data-nav="search" class="search-page-button" onclick="goSearchPage()">Search</button>
                 </div>
                 <input type="text" class="search" id="playlist-search" placeholder="Cerca">
                 <div id="playlists-list">
@@ -118,11 +123,12 @@
             <div id="library">
                 <div id="library-header">
                     <button class="home-button" onclick="goHomePage();">Home</button>
-                    <button data-nav="search" class="search-page-button" onclick="goSearchPage()">Search</button>
+                    <button data-nav="home" class="main-page-button" onclick="goMainPage()">Main Page</button>
                     <button data-nav="albums" class="album-page-button" onclick="goAlbumPage()">Albums</button>
                     <button data-nav="playlists" class=" playlist-page-button"
                         onclick="goPlaylistsPage()">Playlists</button>
-                    <button data-nav="home" class="main-page-button" onclick="goMainPage()">Main Page</button>
+                    <button data-nav="big-picture" class="big-picture-page-button" onclick="showBigPicture()">Big Picture</button>
+                    <button data-nav="search" class="search-page-button" onclick="goSearchPage()">Search</button>
                 </div>
                 <input type="text" class="search" id="search" placeholder="Cerca">
                 <div id="songs-number-serach">
@@ -133,6 +139,21 @@
 
                     </tbody>
                 </table>
+            </div>
+        </div>
+
+        <div id="big-picture">
+            <div id="library-header">
+                <button class="home-button" onclick="goHomePage();">Home</button>
+                <button data-nav="home" class="main-page-button" onclick="goMainPage()">Main Page</button>
+                <button data-nav="albums" class="album-page-button" onclick="goAlbumPage()">Albums</button>
+                <button data-nav="playlists" class=" playlist-page-button"
+                    onclick="goPlaylistsPage()">Playlists</button>
+                <button data-nav="big-picture" class="big-picture-page-button" onclick="showBigPicture()">Big Picture</button>
+                <button data-nav="search" class="search-page-button" onclick="goSearchPage()">Search</button>
+            </div>
+            <div class="big-picture-co">
+
             </div>
         </div>
 

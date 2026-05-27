@@ -87,11 +87,14 @@ def scan_library(music_dir_passed):
                 library_tree[artist][album].append(meta)
     return songs, library_tree
 
+
 @lru_cache(maxsize=512)
 def get_album_cover(path):
     parentPath = os.path.dirname(path)
     stringToPath = Path(parentPath)
     result = next(stringToPath.rglob("*.jpg"), None)
+    if result == None:
+        result = next(stringToPath.rglob("*.png"), None)
     return result
 
 
@@ -258,14 +261,19 @@ def getImage(filename):
     full_path = Path(MUSIC_DIR) / filename
     cover = get_album_cover(full_path)
     size = request.args.get("size", type=int)  # es. /api/cover/...?size=300
-    
+
     if size:
         img = Image.open(cover)
         img.thumbnail((size, size))
         buf = io.BytesIO()
-        img.save(buf, format="JPEG", quality=85)
-        buf.seek(0)
-        return send_file(buf, mimetype="image/jpeg")
+        if img.format == "PNG":
+            img.save(buf, format="PNG", quality=85)
+            buf.seek(0)
+            return send_file(buf, mimetype="image/png")
+        else:
+            img.save(buf, format="JPEG", quality=85)
+            buf.seek(0)
+            return send_file(buf, mimetype="image/jpeg")
     return send_from_directory(str(cover.parent), cover.name)
 
 
