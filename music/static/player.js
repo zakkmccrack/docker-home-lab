@@ -24,6 +24,8 @@ const songsNumberSearch = document.getElementById("songs-number-serach");
 
 const playlistForm = document.getElementById("playlist-form");
 
+const coverAPIPath = "/music/api/cover/"
+
 let library = [];
 let filtered = [];
 
@@ -153,7 +155,7 @@ function renderTree() {
       div.appendChild(divData);
 
       const url =
-        `/music/api/cover/${encodeURIComponent(bandName)}/${encodeURIComponent(albumName[0])}/cover.jpg?size=300`
+        `${coverAPIPath}${encodeURIComponent(bandName)}/${encodeURIComponent(albumName[0])}/cover.jpg?size=300`
           .replace("'", "%27")
           .replace("(", "%28")
           .replace(")", "%29");
@@ -216,7 +218,7 @@ function loadSongSelection() {
   selectBox.appendChild(fragment);
 }
 
-playlistForm.addEventListener("submit", async (e) => {});
+playlistForm.addEventListener("submit", async (e) => { });
 
 // --- Queue ---
 
@@ -260,19 +262,20 @@ function playSong(indexInFiltered) {
     document.title = song.title + " - " + song.artist;
 
     navigator.mediaSession.metadata = new MediaMetadata({
-      title: song.title, //the title of the media
-      artist: song.artist, //the artist of the media
-      album: "Album Name", //the album name of the media
+      title: song.title,
+      artist: song.artist,
+      album: "Album Name",
       artwork: [
-        { src: "https://dummyimage.com/512/000000/ffffff&text=Album%20Art" },
-      ], //the album art associated with the media
+        { src: `${coverAPIPath}${(song.filepath).replace("/music/", "")}` },
+      ],
     });
+
   } else {
     console;
     const songPath = queue[currentQueueIndex];
     const songDataFromPath =
       library[
-        library.findIndex((song) => song.filepath == "/music" + songPath)
+      library.findIndex((song) => song.filepath == "/music" + songPath)
       ];
     audio.src = `/api/stream/path/${songPath}`;
     nowTitle.textContent = songDataFromPath.title;
@@ -360,7 +363,7 @@ album_search.addEventListener("input", () => {
 //  --- GUI Functions --
 
 function loadBigPicture() {
-  alert("big picture");
+  document.getElementById("player-bar").classList.toggle('full-picture');
 }
 
 function highlightRow() {
