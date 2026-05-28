@@ -24,7 +24,6 @@ const songsNumberSearch = document.getElementById("songs-number-serach");
 
 const playlistForm = document.getElementById("playlist-form");
 
-
 let library = [];
 let filtered = [];
 
@@ -42,7 +41,6 @@ let max = 0;
 let randomize = false;
 let currentQueueIndex = -1;
 
-
 // --- Utility ---
 
 function fmt(seconds) {
@@ -52,7 +50,6 @@ function fmt(seconds) {
     .padStart(2, "0");
   return `${m}:${s}`;
 }
-
 
 // --- Library ---
 
@@ -105,7 +102,6 @@ function renderSearchList() {
   songsNumberSearch.innerHTML = filtered.length + " canzoni caricate!";
 }
 
-
 // --- Albums Tree --
 
 async function loadTree() {
@@ -134,16 +130,14 @@ function renderTree() {
 
     artistDiv.appendChild(artistTitle);
 
-    albumList.appendChild(artistDiv)
+    albumList.appendChild(artistDiv);
 
     Object.entries(albums).forEach((albumName, j) => {
       const div = document.createElement("div");
       div.classList.add("album-div");
 
-
       const divData = document.createElement("div");
       divData.classList.add("album-data");
-
 
       const divArtistName = document.createElement("div");
       divArtistName.classList.add("album-artist-name-div");
@@ -156,11 +150,15 @@ function renderTree() {
       divData.appendChild(divAlbumName);
       divData.appendChild(divArtistName);
 
-      div.appendChild(divData)
+      div.appendChild(divData);
 
-      const url = (`/music/api/cover/${encodeURIComponent(bandName)}/${encodeURIComponent(albumName[0])}/cover.jpg?size=300`).replace("'", "%27").replace("(", "%28").replace(")", "%29")
+      const url =
+        `/music/api/cover/${encodeURIComponent(bandName)}/${encodeURIComponent(albumName[0])}/cover.jpg?size=300`
+          .replace("'", "%27")
+          .replace("(", "%28")
+          .replace(")", "%29");
 
-      div.style.backgroundImage = `url(${url})`
+      div.style.backgroundImage = `url(${url})`;
 
       div.addEventListener("click", () => playAlbum(i, albumName[0]));
 
@@ -173,7 +171,7 @@ function renderTree() {
 
 async function loadPlaylists() {
   const res = await fetch("/api/playlists");
-  console.log(res)
+  console.log(res);
   playlists = await res.json();
   playlists = Object.entries(playlists);
 
@@ -192,7 +190,7 @@ function renderPlaylists() {
     divAlbumName.textContent = playlist;
 
     div.appendChild(divAlbumName);
-    console.log(songs)
+    console.log(songs);
     div.addEventListener("click", () => startPlaylist(songs));
 
     playlistsList.appendChild(div);
@@ -211,17 +209,14 @@ function loadSongSelection() {
   library.forEach((song, i) => {
     const optionBox = document.createElement("option");
     const filepathOriginal = song.filepath;
-    optionBox.value = (filepathOriginal.replace("/music", ''));
+    optionBox.value = filepathOriginal.replace("/music", "");
     optionBox.textContent = song.title;
     fragment.appendChild(optionBox);
   });
   selectBox.appendChild(fragment);
 }
 
-playlistForm.addEventListener("submit", async (e) => {
-
-})
-
+playlistForm.addEventListener("submit", async (e) => {});
 
 // --- Queue ---
 
@@ -239,16 +234,19 @@ function populateQueue(indexInFiltered) {
   }
 }
 
-
 // --- Player ---
 
 // DO BETTER
 
 function playSong(indexInFiltered) {
-  if (queue[0] == null || (currentQueueIndex == queue.length - 1 && !isPlaylist) || (currentQueueIndex == queue.length && isPlaylist)) {
+  if (
+    queue[0] == null ||
+    (currentQueueIndex == queue.length - 1 && !isPlaylist) ||
+    (currentQueueIndex == queue.length && isPlaylist)
+  ) {
     populateQueue(indexInFiltered);
   }
-  console.log(queue)
+  console.log(queue);
   if (!isPlaylist) {
     const song = library[queue[currentQueueIndex]];
     audio.src = `/api/stream/${song.id}`;
@@ -260,10 +258,22 @@ function playSong(indexInFiltered) {
     highlightRow();
 
     document.title = song.title + " - " + song.artist;
+
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: song.title, //the title of the media
+      artist: song.artist, //the artist of the media
+      album: "Album Name", //the album name of the media
+      artwork: [
+        { src: "https://dummyimage.com/512/000000/ffffff&text=Album%20Art" },
+      ], //the album art associated with the media
+    });
   } else {
-    console
+    console;
     const songPath = queue[currentQueueIndex];
-    const songDataFromPath = library[library.findIndex((song) => song.filepath == ("/music" + songPath))]
+    const songDataFromPath =
+      library[
+        library.findIndex((song) => song.filepath == "/music" + songPath)
+      ];
     audio.src = `/api/stream/path/${songPath}`;
     nowTitle.textContent = songDataFromPath.title;
     nowArtist.textContent = songDataFromPath.artist;
@@ -280,7 +290,7 @@ function playNext() {
   if (isAlbum) {
     queue[queue.length] = queue[currentQueueIndex];
   }
-  console.log(queue)
+  console.log(queue);
   if (!randomize) {
     if (currentQueueIndex < max) playSong(currentQueueIndex + 1);
     else btnPlay.textContent = "▶";
@@ -305,7 +315,7 @@ function startPlaylist(playlist_queue) {
   isPlaylist = true;
   queue = playlist_queue;
   currentQueueIndex = -1;
-  console.log(queue)
+  console.log(queue);
   playNext();
 }
 
@@ -321,10 +331,9 @@ function selectFilteredSong(songNameInFiltered) {
   currentQueueIndex = 0;
   isAlbum = false;
   isPlaylist = false;
-  populateQueue((library.findIndex((song) => song.title == songNameInFiltered)));
-  playSong((library.findIndex((song) => song.title == songNameInFiltered)));
+  populateQueue(library.findIndex((song) => song.title == songNameInFiltered));
+  playSong(library.findIndex((song) => song.title == songNameInFiltered));
 }
-
 
 // --- Search ---
 
@@ -390,12 +399,10 @@ btnRandom.addEventListener("click", () => {
   populateQueue(queue[currentQueueIndex]);
 });
 
-
 // Autoplay next track
 audio.addEventListener("ended", () => {
   playNext();
 });
-
 
 // Seekbar
 audio.addEventListener("timeupdate", () => {
@@ -411,51 +418,56 @@ seekbar.addEventListener("input", () => {
   audio.currentTime = seekbar.value;
 });
 
-
 // Volume
 volumebar.addEventListener("input", () => {
   audio.volume = volumebar.value / 100;
 });
 
-
 // -- Filters (non funzionano per ora)--
 
 function orderByTitle() {
-  filtered.sort((a, b) => a.album.localeCompare(b.album) || a.title_full.localeCompare(b.title_full))
-  document.getElementById("title-col").classList.add("active-filter")
-  document.getElementById("artist-col").classList.remove("active-filter")
-  document.getElementById("album-col").classList.remove("active-filter")
-  document.getElementById("duration-col").classList.remove("active-filter")
+  filtered.sort(
+    (a, b) =>
+      a.album.localeCompare(b.album) ||
+      a.title_full.localeCompare(b.title_full),
+  );
+  document.getElementById("title-col").classList.add("active-filter");
+  document.getElementById("artist-col").classList.remove("active-filter");
+  document.getElementById("album-col").classList.remove("active-filter");
+  document.getElementById("duration-col").classList.remove("active-filter");
   renderSearchList();
 }
 
 function orderByArtist() {
-  filtered.sort((a, b) => a.artist.localeCompare(b.artist))
-  document.getElementById("title-col").classList.remove("active-filter")
-  document.getElementById("artist-col").classList.add("active-filter")
-  document.getElementById("album-col").classList.remove("active-filter")
-  document.getElementById("duration-col").classList.remove("active-filter")
+  filtered.sort((a, b) => a.artist.localeCompare(b.artist));
+  document.getElementById("title-col").classList.remove("active-filter");
+  document.getElementById("artist-col").classList.add("active-filter");
+  document.getElementById("album-col").classList.remove("active-filter");
+  document.getElementById("duration-col").classList.remove("active-filter");
   renderSearchList();
 }
 
 function orderByAlbum() {
-  filtered.sort((a, b) => a.album.localeCompare(b.album) || a.title_full.localeCompare(b.title_full))
-  document.getElementById("title-col").classList.remove("active-filter")
-  document.getElementById("artist-col").classList.remove("active-filter")
-  document.getElementById("album-col").classList.add("active-filter")
-  document.getElementById("duration-col").classList.remove("active-filter")
+  filtered.sort(
+    (a, b) =>
+      a.album.localeCompare(b.album) ||
+      a.title_full.localeCompare(b.title_full),
+  );
+  document.getElementById("title-col").classList.remove("active-filter");
+  document.getElementById("artist-col").classList.remove("active-filter");
+  document.getElementById("album-col").classList.add("active-filter");
+  document.getElementById("duration-col").classList.remove("active-filter");
   renderSearchList();
 }
 
 function orderByTime() {
-  filtered.sort((a, b) => a.duration - b.duration)
-  document.getElementById("title-col").classList.remove("active-filter")
-  document.getElementById("artist-col").classList.remove("active-filter")
-  document.getElementById("album-col").classList.remove("active-filter")
-  document.getElementById("duration-col").classList.add("active-filter")
+  filtered.sort((a, b) => a.duration - b.duration);
+  document.getElementById("title-col").classList.remove("active-filter");
+  document.getElementById("artist-col").classList.remove("active-filter");
+  document.getElementById("album-col").classList.remove("active-filter");
+  document.getElementById("duration-col").classList.add("active-filter");
   renderSearchList();
 }
-
 
 // --- Init ---
 loadLibrary();
