@@ -10,6 +10,7 @@ const timeCurrent = document.getElementById("time-current");
 const timeTotal = document.getElementById("time-total");
 const nowTitle = document.getElementById("now-title");
 const nowArtist = document.getElementById("now-artist");
+const nowCover = document.getElementById("now-album-image")
 
 const songList = document.getElementById("song-list");
 const searchList = document.getElementById("search-list");
@@ -269,6 +270,16 @@ function playSong(indexInFiltered) {
         { src: `${coverAPIPath}${(song.filepath).replace("/music/", "")}` },
       ],
     });
+
+
+    const url =
+      `${coverAPIPath}${encodeURIComponent((song.filepath).replace("/music/", ""))}`
+        .replace("'", "%27")
+        .replace("(", "%28")
+        .replace(")", "%29");
+
+    nowCover.style.backgroundImage = `url(${url})`;
+
 
   } else {
     console;

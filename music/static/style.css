@@ -313,17 +313,20 @@ Album Page
 Full picture
 */
 
-.full-picture{
+.full-picture {
     height: 100%;
 }
 
-#now-img {
-    
+#now-album-image {
+    width: 100px;
+    height: 100px;
+    aspect-ratio: 1/1;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-
 /* Responsive */
-
 
 @media only screen and (max-width: 768px) {
     #player-bar {
