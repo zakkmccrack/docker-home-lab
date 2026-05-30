@@ -280,7 +280,6 @@ function playSong(indexInFiltered) {
 
     nowCover.style.backgroundImage = `url(${url})`;
 
-
   } else {
     console;
     const songPath = queue[currentQueueIndex];
@@ -433,9 +432,9 @@ seekbar.addEventListener("input", () => {
 });
 
 // Volume
-volumebar.addEventListener("input", () => {
-  audio.volume = volumebar.value / 100;
-});
+// volumebar.addEventListener("input", () => {
+//   audio.volume = volumebar.value / 100;
+// });
 
 // -- Filters (non funzionano per ora)--
 

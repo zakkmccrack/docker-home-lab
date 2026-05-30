@@ -171,11 +171,11 @@ body {
     width: 100%;
     background: #181818;
     border-top: 1px solid #333;
-    padding: 12px 24px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 24px;
+    padding: 8px 12px;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(1, 1fr);
+    gap: 10px;
 }
 
 .song-controls {
@@ -342,7 +342,7 @@ Full picture
     }
 
     .song-controls {
-        justify-content: center;
+        justify-content: space-around;
     }
 
     .audio-controls {
