@@ -317,13 +317,81 @@ Full picture
     height: 100%;
 }
 
-#now-album-image {
-    width: 100px;
-    height: 100px;
+#player-bar.is-full-picture {
+    bottom: 0;
+    width: 100%;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(1, 1fr);
+    gap: 10px;
+}
+
+.song-controls.is-full-picture {
+    height: fit-content;
+    flex-direction: column;
+}
+
+#now-album-image.is-full-picture {
+    width: 30%;
+    height: 100%;
     aspect-ratio: 1/1;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+
+/* #player-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 180px;
+} */
+
+/* #now-title {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#now-artist {
+    font-size: 12px;
+    color: #aaa;
+} */
+
+
+#player-controls.is-full-picture {
+    display: flex;
+    gap: 12px;
+    font-size: 50px;
+}
+
+#player-controls.is-full-picture button {
+    font-size: 50px;
+}
+
+#player-progress {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    max-width: 20%;
+    flex: 1;
+}
+
+#player-progress input[type=range] {
+    flex: 1;
+}
+
+#player-volume {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 100px;
+}
+
+.audio-controls {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
 }
 
 /* Responsive */

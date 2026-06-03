@@ -44,6 +44,10 @@ let max = 0;
 let randomize = false;
 let currentQueueIndex = -1;
 
+navigator.mediaSession.setActionHandler("nexttrack", () => btnNext.click());
+navigator.mediaSession.setActionHandler("previoustrack", () => btnPrev.click());
+
+
 // --- Utility ---
 
 function fmt(seconds) {
@@ -52,6 +56,13 @@ function fmt(seconds) {
     .toString()
     .padStart(2, "0");
   return `${m}:${s}`;
+}
+
+function randomizeFisherYates() {
+  for (let i = queue.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [queue[i], queue[j]] = [queue[j], queue[i]];
+  }
 }
 
 // --- Library ---
@@ -227,8 +238,13 @@ function populateQueue(indexInFiltered) {
   queue[0] = indexInFiltered;
   currentQueueIndex = 0;
   if (randomize) {
-    for (var i = 1; i < 50; i++) {
-      queue[i] = Math.floor(Math.random() * max);
+    if (!isPlaylist && !isAlbum) {
+      for (var i = 1; i < 50; i++) {
+        queue[i] = Math.floor(Math.random() * max);
+      }
+    }
+    else {
+      randomizeFisherYates();
     }
   } else {
     for (var i = 1; i < 50; i++) {
@@ -262,15 +278,17 @@ function playSong(indexInFiltered) {
 
     document.title = song.title + " - " + song.artist;
 
+
+    // in caso di album uguale riutilizzare la stessa img
+
     navigator.mediaSession.metadata = new MediaMetadata({
       title: song.title,
       artist: song.artist,
-      album: "Album Name",
+      album: song.album,
       artwork: [
         { src: `${coverAPIPath}${(song.filepath).replace("/music/", "")}` },
       ],
     });
-
 
     const url =
       `${coverAPIPath}${encodeURIComponent((song.filepath).replace("/music/", ""))}`
@@ -374,6 +392,17 @@ album_search.addEventListener("input", () => {
 
 function loadBigPicture() {
   document.getElementById("player-bar").classList.toggle('full-picture');
+
+  document.getElementById("song-controls").classList.toggle('is-full-picture');
+
+  document.getElementById("now-album-image").classList.toggle('is-full-picture');
+  document.getElementById("player-info").classList.toggle('is-full-picture');
+
+  document.getElementById("audio-controls").classList.toggle('is-full-picture');
+
+  document.getElementById("player-progess").classList.toggle('is-full-picture');
+  document.getElementById("player-controls").classList.toggle('is-full-picture');
+
 }
 
 function highlightRow() {
