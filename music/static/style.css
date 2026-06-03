@@ -110,9 +110,8 @@ body {
 #library {
     flex: 1;
     overflow-y: auto;
-    padding: 0 20px 500px 20px;
+    padding-bottom: 500px;
 }
-
 
 
 .search {
@@ -184,6 +183,15 @@ body {
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
+}
+
+#now-album-image {
+    width: 100px;
+    height: 100px;
+    aspect-ratio: 1/1;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 #player-info {
@@ -317,21 +325,23 @@ Full picture
     height: 100%;
 }
 
-#player-bar.is-full-picture {
+#player-bar.full-picture {
     bottom: 0;
     width: 100%;
-    grid-template-columns: repeat(1, 1fr);
-    grid-template-rows: repeat(1, 1fr);
-    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .song-controls.is-full-picture {
     height: fit-content;
     flex-direction: column;
+    padding-top: 10px;
 }
 
 #now-album-image.is-full-picture {
-    width: 30%;
+    width: 80%;
     height: 100%;
     aspect-ratio: 1/1;
     background-size: cover;
@@ -339,51 +349,38 @@ Full picture
     background-repeat: no-repeat;
 }
 
-
-/* #player-info {
-    display: flex;
-    flex-direction: column;
-    min-width: 180px;
-} */
-
-/* #now-title {
-    font-weight: bold;
-    font-size: 14px;
+#player-info.is-full-picture{
+    padding-top: 15px;
 }
 
-#now-artist {
-    font-size: 12px;
-    color: #aaa;
-} */
+#player-info.is-full-picture #now-title {
+    font-weight: bold;
+    font-size: 25px;
+}
 
+#player-info.is-full-picture #now-artist {
+    font-size: 20px;
+    color: #aaa;
+}
 
 #player-controls.is-full-picture {
     display: flex;
     gap: 12px;
     font-size: 50px;
+    justify-content: center;
 }
 
 #player-controls.is-full-picture button {
     font-size: 50px;
 }
 
-#player-progress {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    max-width: 20%;
-    flex: 1;
+#player-progress.is-full-picture {
+    max-width: 100%;
+    justify-content: center;
 }
 
 #player-progress input[type=range] {
     flex: 1;
-}
-
-#player-volume {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    min-width: 100px;
 }
 
 .audio-controls {

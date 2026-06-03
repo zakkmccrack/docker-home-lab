@@ -400,7 +400,7 @@ function loadBigPicture() {
 
   document.getElementById("audio-controls").classList.toggle('is-full-picture');
 
-  document.getElementById("player-progess").classList.toggle('is-full-picture');
+  document.getElementById("player-progress").classList.toggle('is-full-picture');
   document.getElementById("player-controls").classList.toggle('is-full-picture');
 
 }

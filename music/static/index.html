@@ -12,7 +12,7 @@
     <div id="app">
 
         <div id="player-bar">
-            <div class="song-controls">
+            <div id="song-controls" class="song-controls">
                 <div id="now-album-image">
                 </div>
                 <div id="player-info">
@@ -20,17 +20,17 @@
                     <span id="now-artist"></span>
                 </div>
             </div>
-            <div class="audio-controls">
-                <div id="player-progress">
-                    <span id="time-current">0:00</span>
-                    <input type="range" id="seekbar" value="0" min="0" step="1">
-                    <span id="time-total">0:00</span>
-                </div>
+            <div id="audio-controls" class="audio-controls">
                 <div id="player-controls">
                     <button id="btn-random">⤨</button>
                     <button id="btn-prev">⏮</button>
                     <button id="btn-play">▶</button>
                     <button id="btn-next">⏭</button>
+                </div>
+                <div id="player-progress">
+                    <span id="time-current">0:00</span>
+                    <input type="range" id="seekbar" value="0" min="0" step="1">
+                    <span id="time-total">0:00</span>
                 </div>
                 <!-- <div id="player-volume">
                     <span>🔊</span>
@@ -64,7 +64,6 @@
                     <button data-nav="playlists" class=" playlist-page-button"
                         onclick="goPlaylistsPage()">Playlists</button>
                     <button data-nav="albums" class="album-page-button" onclick="showBigPicture()">Big Picture</button>
-                    <button data-nav="search" class="search-page-button" onclick="goSearchPage()">Search</button>
                 </div>
                 <div id="songs-number">
 
@@ -95,7 +94,6 @@
                         onclick="goPlaylistsPage()">Playlists</button>
                     <button data-nav="big-picture" class="big-picture-page-button" onclick="showBigPicture()">Big
                         Picture</button>
-                    <button data-nav="search" class="search-page-button" onclick="goSearchPage()">Search</button>
                 </div>
                 <input type="text" class="search" id="album-search" placeholder="Cerca Album">
 
@@ -115,7 +113,6 @@
                         onclick="goPlaylistsPage()">Playlists</button>
                     <button data-nav="big-picture" class="big-picture-page-button" onclick="showBigPicture()">Big
                         Picture</button>
-                    <button data-nav="search" class="search-page-button" onclick="goSearchPage()">Search</button>
                 </div>
                 <input type="text" class="search" id="playlist-search" placeholder="Cerca">
                 <div id="playlists-list">
@@ -134,7 +131,6 @@
                         onclick="goPlaylistsPage()">Playlists</button>
                     <button data-nav="big-picture" class="big-picture-page-button" onclick="showBigPicture()">Big
                         Picture</button>
-                    <button data-nav="search" class="search-page-button" onclick="goSearchPage()">Search</button>
                 </div>
                 <input type="text" class="search" id="search" placeholder="Cerca">
                 <div id="songs-number-serach">
