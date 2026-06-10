@@ -349,7 +349,7 @@ Full picture
     background-repeat: no-repeat;
 }
 
-#player-info.is-full-picture{
+#player-info.is-full-picture {
     padding-top: 15px;
 }
 
@@ -420,5 +420,11 @@ Full picture
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
         gap: 12px;
+    }
+}
+
+@media only screen and (min-width: 680px) {
+    #now-album-image.is-full-picture {
+        width: 20%;
     }
 }

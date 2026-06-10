@@ -1,0 +1,57 @@
+---
+import "../styles/global.css";
+---
+
+<div
+  class="w-full min-h-full h-fit flex flex-col items-center bg-neutral-900 py-12 gap-8"
+>
+  <div class="flex flex-col items-center gap-2 text-center px-4">
+    <h1 class="text-2xl font-medium">zakkRaspberry</h1>
+    <p class="text-sm text-gray-500">
+      Home server · sempre acceso, mai riposato
+    </p>
+  </div>
+
+  <div class="flex items-center gap-2">
+    <span class="w-2 h-2 rounded-full bg-green-500"></span>
+    <span class="text-xs text-gray-500">Tutti i servizi attivi</span>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-2xl px-6">
+    <a
+      href="/music/"
+      class="flex flex-col gap-3 p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 hover:-translate-y-0.5 transition-all no-underline"
+    >
+      <div
+        class="w-11 h-11 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center text-xl"
+      >
+        ♪
+      </div>
+      <div>
+        <p class="font-medium text-base">Server di Musica</p>
+        <p class="text-sm text-gray-500 mt-1">
+          Sfoglia e ascolta la tua libreria in FLAC.
+        </p>
+      </div>
+      <span class="text-blue-600 text-sm mt-auto">Apri →</span>
+    </a>
+
+    <a
+      href="/stats/"
+      class="flex flex-col gap-3 p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 hover:-translate-y-0.5 transition-all no-underline"
+    >
+      <div
+        class="w-11 h-11 rounded-lg bg-green-50 text-green-700 flex items-center justify-center text-xl"
+      >
+        📊
+      </div>
+      <div>
+        <p class="font-medium text-base">Statistiche del sistema</p>
+        <p class="text-sm text-gray-500 mt-1">
+          CPU, RAM, disco e salute del server.
+        </p>
+      </div>
+      <span class="text-green-600 text-sm mt-auto">Apri →</span>
+    </a>
+  </div>
+</div>

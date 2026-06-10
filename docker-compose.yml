@@ -1,6 +1,6 @@
 services:
   flask_app:
-    build: ./app
+    build: ./stats
     container_name: flask_service
     restart: always
     privileged: true
@@ -36,3 +36,9 @@ services:
       - /home/zakkmccrack/Music/Musica:/music:ro
       #file delle playlist montato a runtime
       - ./data/playlists.json:/data/playlists.json
+
+  home:
+    build: ./home
+    container_name: home_service
+    restart: always
+    network_mode: "host"
