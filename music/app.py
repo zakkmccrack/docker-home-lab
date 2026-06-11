@@ -124,6 +124,10 @@ def next_id(playlists):
 def index():
     return send_from_directory("static", "index.html")
 
+@app.route("/api/status")
+def status():
+    return {'OK': 'nothing to see here'}, 200
+
 
 @app.route("/static/<path:filename>")
 def static_files(filename):

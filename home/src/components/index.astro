@@ -6,21 +6,15 @@ import "../styles/global.css";
   class="w-full min-h-full h-fit flex flex-col items-center bg-neutral-900 py-12 gap-8"
 >
   <div class="flex flex-col items-center gap-2 text-center px-4">
-    <h1 class="text-2xl font-medium">zakkRaspberry</h1>
-    <p class="text-sm text-gray-500">
-      Home server · sempre acceso, mai riposato
-    </p>
-  </div>
-
-  <div class="flex items-center gap-2">
-    <span class="w-2 h-2 rounded-full bg-green-500"></span>
-    <span class="text-xs text-gray-500">Tutti i servizi attivi</span>
+    <h1 class="text-3xl font-medium">zakkRaspberry</h1>
+    <span id="status" class="w-9 h-9 rounded-full bg-red-500 animate-pulse"
+    ></span>
   </div>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-2xl px-6">
     <a
       href="/music/"
-      class="flex flex-col gap-3 p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 hover:-translate-y-0.5 transition-all no-underline"
+      class="flex flex-col gap-3 p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-neutral-800 hover:-translate-y-0.5 transition-all no-underline"
     >
       <div
         class="w-11 h-11 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center text-xl"
@@ -38,7 +32,7 @@ import "../styles/global.css";
 
     <a
       href="/stats/"
-      class="flex flex-col gap-3 p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 hover:-translate-y-0.5 transition-all no-underline"
+      class="flex flex-col gap-3 p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-neutral-800 hover:-translate-y-0.5 transition-all no-underline"
     >
       <div
         class="w-11 h-11 rounded-lg bg-green-50 text-green-700 flex items-center justify-center text-xl"
@@ -55,3 +49,10 @@ import "../styles/global.css";
     </a>
   </div>
 </div>
+<script>
+  import { checkAllStatus } from "../scripts/status.js";
+  if (await checkAllStatus()) {
+    document.getElementById("status")?.classList.remove("bg-red-500");
+    document.getElementById("status")?.classList.add("bg-green-500");
+  }
+</script>
