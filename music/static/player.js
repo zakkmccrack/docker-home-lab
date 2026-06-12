@@ -94,7 +94,7 @@ function coverUrlFromAlbum(artist, album) {
 
 // Fisher-Yates
 function shuffleInPlace(arr) {
-  for (let i = queue.length - 1; i > 0; i--) {
+  for (let i = state.queue.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [arr[i], arr[j]] = [arr[j], arr[i]];
   }
@@ -128,6 +128,8 @@ function buildLibraryQueue(startIndex) {
 }
 
 function buildAlbumQueue(songIndices) {
+  state.queue = songIndices;
+  console.log(songIndices);
   state.queue = state.randomize ? shuffledCopy(songIndices) : [...songIndices];
   state.queueIndex = -1;
   state.queueSource = QueueSource.ALBUM;
@@ -143,6 +145,19 @@ function shuffledCopy(arr) {
   const copy = [...arr];
   shuffleInPlace(copy);
   return copy;
+}
+
+function addSongsToQueue(currentIndex) {
+  const max = state.library.length;
+  if (state.randomize) {
+    const rest = Array.from({ length: 49 }, () =>
+      Math.floor(Math.random() * max),
+    );
+    state.queue = state.queue.concat(rest);
+  } else {
+    const rest = Array.from({ length: 50 }, (_, i) => (currentIndex + i) % max);
+    state.queue = state.queue.concat(rest);
+  }
 }
 
 // ============================================================
@@ -387,6 +402,15 @@ btnRandom.addEventListener("click", () => {
   if (state.queueSource === QueueSource.LIBRARY && state.queueIndex >= 0) {
     const current = state.queue[state.queueIndex];
     buildLibraryQueue(current);
+  } else if (state.queueSource === QueueSource.ALBUM && state.queueIndex >= 0) {
+    const current = state.queue[state.queueIndex];
+    buildAlbumQueue(current);
+  } else if (
+    state.queueSource === QueueSource.PLAYLIST &&
+    state.queueIndex >= 0
+  ) {
+    const current = state.queue[state.queueIndex];
+    buildPlaylistQueue(current);
   }
 });
 
@@ -483,8 +507,11 @@ function updateNowPlayingUI(song) {
 function playNext() {
   const lastIndex = state.queue.length - 1;
   if (state.queueIndex >= lastIndex) {
-    btnPlay.textContent = "▶";
-    return;
+    if (state.queueSource == "album" || state.queueSource == "playlist") {
+      state.queueIndex = -1;
+    } else {
+      addSongsToQueue(state.queueIndex);
+    }
   }
   state.queueIndex++;
   playCurrentSong();

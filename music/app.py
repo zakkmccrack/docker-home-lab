@@ -271,11 +271,11 @@ def getImage(filename):
         img.thumbnail((size, size))
         buf = io.BytesIO()
         if img.format == "PNG":
-            img.save(buf, format="PNG", quality=75)
+            img.save(buf, format="PNG", quality=70)
             buf.seek(0)
             return send_file(buf, mimetype="image/png")
         else:
-            img.save(buf, format="JPEG", quality=75)
+            img.save(buf, format="JPEG", quality=70)
             buf.seek(0)
             return send_file(buf, mimetype="image/jpeg")
     return send_from_directory(str(cover.parent), cover.name)
