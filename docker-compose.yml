@@ -1,4 +1,10 @@
 services:
+  home:
+    build: ./home
+    container_name: home_service
+    restart: always
+    network_mode: "host"
+
   flask_app:
     build: ./stats
     container_name: flask_service
@@ -31,14 +37,24 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
       - MUSIC_DIR=/music
+      - DB_PATH=/data/metadata.db
     volumes:
       #path alla cartella locale con tutti gli artisti/album/canzoni
       - /home/zakkmccrack/Music/Musica:/music:ro
       #file delle playlist montato a runtime
-      - ./data/playlists.json:/data/playlists.json
+      - ./shared/db.py:/app/db.py
+      - ./data:/data
 
-  home:
-    build: ./home
-    container_name: home_service
-    restart: always
-    network_mode: "host"
+  metadata-worker:
+    build: ./metadata-worker
+    container_name: metadata_service
+    volumes:
+      - /home/zakkmccrack/Music/Musica:/music:ro
+      - ./shared/db.py:/app/db.py
+      - ./data:/data
+    environment:
+      - NUM_WORKERS=1
+      - SCAN_INTERVAL=3600
+      - MUSIC_DIR=/music
+      - DB_PATH=/data/metadata.db
+    restart: unless-stopped
