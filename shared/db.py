@@ -99,3 +99,10 @@ def get_all_paths() -> list[str]:
     rows = conn.execute("""SELECT file_path FROM track_metadata""").fetchall()
     conn.close()
     return [r["file_path"] for r in rows]
+
+def get_all() -> list[str]:
+    """Recupera tutte le canzoni già registrate"""
+    conn = get_db()
+    rows = conn.execute("""SELECT * FROM track_metadata""").fetchall()
+    conn.close()
+    return [dict(r) for r in rows]

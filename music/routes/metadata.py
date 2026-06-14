@@ -1,6 +1,6 @@
 # routes/metadata.py
 from flask import Blueprint, jsonify
-from db import get_track
+from db import get_track, get_all
 
 metadata_bp = Blueprint("metadata", __name__)
 
@@ -35,3 +35,15 @@ def track_lyrics():
         return jsonify({"error": "lyrics non disponibili"}), 404
 
     return jsonify({"lyrics": data["lyrics"]})
+
+@metadata_bp.route("/api/database/all")
+def databse_dump():
+    """
+    GET /api/database/all
+    """
+    data = get_all()
+    
+    if not data:
+        return jsonify({"error": "lyrics non disponibili"}), 404
+
+    return jsonify(data)

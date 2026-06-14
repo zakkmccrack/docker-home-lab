@@ -55,12 +55,19 @@ def get_release_metadata(mbid_release: str) -> dict:
     if not data:
         return {}
 
-    genres = [g["name"] for g in data.get("genres", [])]
-    tags = [t["name"] for t in data.get("tags", []) if t.get("count", 0) >= 3]
+    artist_credits = data.get("artist-credit", [])
+    artist = artist_credits[0].get("artist", {})
+
+    genres = [g["name"] for g in artist.get("genres", [])]
+
+    tags = [t["name"] for t in artist.get("tags", []) if t.get("count", 0) >= 1]
+
     label = None
     label_info = data.get("label-info", [])
     if label_info:
-        label = label_info[0].get("label", {}).get("name")
+        first = label_info[0]
+        if first and first.get("label"):
+            label = first.get("label", {}).get("name")
 
     return {
         "genres": genres,

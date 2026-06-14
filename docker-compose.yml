@@ -53,8 +53,8 @@ services:
       - ./shared/db.py:/app/db.py
       - ./data:/data
     environment:
-      - NUM_WORKERS=1
       - SCAN_INTERVAL=3600
       - MUSIC_DIR=/music
       - DB_PATH=/data/metadata.db
+      - PYTHONUNBUFFERED=1
     restart: unless-stopped
