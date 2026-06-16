@@ -457,6 +457,14 @@ function loadBigPicture() {
   document
     .getElementById("player-controls")
     .classList.toggle("is-full-picture");
+
+  document
+    .getElementById("now-lyrics")
+    .classList.toggle("hidden");
+
+  document
+    .getElementById("app")
+    .classList.toggle("scroll-hidden");
 }
 
 // ============================================================
@@ -484,15 +492,21 @@ function playCurrentSong() {
   updateNowPlayingUI(song);
 }
 
-function updateNowPlayingUI(song) {
+function updateNowPlayingUI(song, full = false) {
   nowTitle.textContent = song.title;
   nowArtist.textContent = song.artist;
   seekbar.max = song.duration;
   btnPlay.textContent = "⏸";
-  document.title = `${song.title} - ${song.artist}`;
-
+  
   const coverUrl = coverUrlFromSong(song);
-  nowCover.style.backgroundImage = `url(${coverUrl})`;
+  document.title = `${song.title} - ${song.artist}`;
+  if (full) { document.getElementById("player-bar").style.backgroundImage = `url(${coverUrl})`; }
+  else {
+    nowCover.style.backgroundImage = `url(${coverUrl})`;
+  }
+
+
+  getLyrics(song.filepath)
 
   navigator.mediaSession.metadata = new MediaMetadata({
     title: song.title,
@@ -522,6 +536,18 @@ function playPrev() {
   state.queueIndex--;
   playCurrentSong();
 }
+
+// ============================================================
+//  Lyrics
+// ============================================================
+
+async function getLyrics(song) {
+  const path = "/api/track/lyrics?path=" + song;
+  const res = await fetch(path);
+  const raw = await res.json();
+  document.getElementById("now-lyrics").textContent = raw["lyrics"]
+}
+
 
 // ============================================================
 //  Init

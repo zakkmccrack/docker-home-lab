@@ -1,4 +1,10 @@
-* {
+/* ============================================================
+   1. RESET & BASE
+   ============================================================ */
+
+*,
+*::before,
+*::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -6,14 +12,65 @@
 
 body {
     font-family: sans-serif;
-    background: #121212;
-    color: #fff;
+    background: var(--bg-base);
+    color: var(--text-primary);
     display: flex;
     flex-direction: column;
     height: 100vh;
 }
 
-/* Home Page */
+.hidden {
+    display: none;
+}
+
+.scroll-hidden {
+    overflow-y: hidden;
+}
+
+
+/* ============================================================
+   2. CUSTOM PROPERTIES
+   ============================================================ */
+
+:root {
+    /* Backgrounds */
+    --bg-base: #121212;
+    --bg-elevated: #181818;
+    --bg-hover: #1e1e1e;
+    --bg-input: #2a2a2a;
+    --bg-overlay: #121212dc;
+
+    /* Borders */
+    --border-subtle: #1e1e1e;
+    --border-default: #333;
+    --border-card: #3a3a3a;
+    --border-card-hover: #555;
+
+    /* Text */
+    --text-primary: #ffffff;
+    --text-secondary: #aaa;
+    --text-muted: #888;
+
+    /* Accent */
+    --accent: #1db4b9;
+
+    /* Border radius */
+    --radius-sm: 8px;
+    --radius-pill: 20px;
+
+    /* Font sizes */
+    --fs-xs: 12px;
+    --fs-sm: 13px;
+    --fs-md: 14px;
+
+    /* Album grid */
+    --album-min-size: 250px;
+}
+
+
+/* ============================================================
+   3. HOME PAGE
+   ============================================================ */
 
 #home {
     padding: 2rem 1rem;
@@ -21,8 +78,8 @@ body {
 }
 
 .home-label {
-    font-size: 13px;
-    color: #888;
+    font-size: var(--fs-sm);
+    color: var(--text-muted);
     letter-spacing: 0.06em;
     text-transform: uppercase;
     font-weight: 500;
@@ -46,14 +103,14 @@ body {
     gap: 12px;
     width: 100%;
     padding: 10px 14px;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     cursor: pointer;
     text-align: left;
-    font-size: 14px;
+    font-size: var(--fs-md);
     background: transparent;
     border: none;
+    color: var(--text-primary);
     transition: background 0.15s;
-    color: white;
 }
 
 #home-buttons button:hover {
@@ -66,14 +123,26 @@ body {
     flex-shrink: 0;
 }
 
-/* Library header */
+
+/* ============================================================
+   4. LIBRARY
+   ============================================================ */
+
+#library {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 500px;
+}
+
+/* Header */
+
 #library-header {
     position: fixed;
     display: flex;
     align-items: center;
     gap: 4px;
     border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
-    background-color: #000000;
+    background-color: #000;
     padding-bottom: 0;
 }
 
@@ -83,14 +152,14 @@ body {
 
 #library-header button {
     padding: 8px 14px;
-    font-size: 14px;
+    font-size: var(--fs-md);
     font-weight: 400;
     background: transparent;
     border: none;
     border-bottom: 2px solid transparent;
     margin-bottom: -1px;
     cursor: pointer;
-    color: #888;
+    color: var(--text-muted);
     border-radius: 0;
     transition: color 0.15s;
 }
@@ -100,29 +169,24 @@ body {
 }
 
 #library-header button.active {
-    color: #ffffff;
-    border-bottom-color: #ffffff;
+    color: var(--text-primary);
+    border-bottom-color: var(--text-primary);
     font-weight: 500;
 }
 
-/* Library */
-
-#library {
-    flex: 1;
-    overflow-y: auto;
-    padding-bottom: 500px;
-}
-
+/* Search */
 
 .search {
-    background: #2a2a2a;
+    background: var(--bg-input);
     border: none;
-    border-radius: 20px;
+    border-radius: var(--radius-pill);
     padding: 8px 16px;
-    color: #fff;
+    color: var(--text-primary);
     width: 250px;
     outline: none;
 }
+
+/* Song table */
 
 #song-table {
     width: 100%;
@@ -132,13 +196,13 @@ body {
 #song-table th {
     text-align: left;
     padding: 8px 12px;
-    color: #aaa;
-    border-bottom: 1px solid #333;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-default);
 }
 
 #song-table td {
     padding: 10px 12px;
-    border-bottom: 1px solid #1e1e1e;
+    border-bottom: 1px solid var(--border-subtle);
 }
 
 #song-list tr,
@@ -148,12 +212,12 @@ body {
 
 #song-list tr:hover,
 #search-list tr:hover {
-    background: #1e1e1e;
+    background: var(--bg-hover);
 }
 
 #song-list tr.active,
 #search-list tr.active {
-    background: #1db4b9;
+    background: var(--accent);
     color: #000;
 }
 
@@ -162,19 +226,87 @@ body {
 }
 
 
-/* Player bar */
+/* ============================================================
+   5. ALBUMS
+   ============================================================ */
+
+#albums {
+    display: none;
+}
+
+#albums-list {
+    width: 100%;
+    height: fit-content;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(var(--album-min-size), 1fr));
+    gap: 32px;
+}
+
+.album-div {
+    border: 0.5px solid var(--border-card);
+    cursor: pointer;
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+
+.album-div:hover {
+    background: #222;
+    border-color: var(--border-card-hover);
+    transform: translateY(-2px);
+}
+
+.album-data {
+    width: 100%;
+    height: fit-content;
+    padding: 14px;
+    background-color: var(--bg-overlay);
+}
+
+.album-name-div {
+    font-size: var(--fs-md);
+    font-weight: 500;
+    color: var(--text-primary);
+    padding-bottom: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* rimosso white-space: nowrap + text-wrap: wrap che si annullavano a vicenda */
+}
+
+.album-artist-name-div {
+    font-size: var(--fs-xs);
+    color: var(--text-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* stessa cosa */
+}
+
+.artist-title-div {
+    padding-top: 30px;
+    grid-column: 1 / -1;
+}
+
+
+/* ============================================================
+   6. PLAYER BAR
+   ============================================================ */
 
 #player-bar {
     position: fixed;
     bottom: 0;
     width: 100%;
-    background: #181818;
-    border-top: 1px solid #333;
+    background: var(--bg-elevated);
+    border-top: 1px solid var(--border-default);
     padding: 8px 12px;
     display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    grid-template-rows: repeat(1, 1fr);
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
     gap: 10px;
+    background-position: center;
+    background-size: cover;
 }
 
 .song-controls {
@@ -188,7 +320,7 @@ body {
 #now-album-image {
     width: 100px;
     height: 100px;
-    aspect-ratio: 1/1;
+    aspect-ratio: 1 / 1;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -202,14 +334,13 @@ body {
 
 #now-title {
     font-weight: bold;
-    font-size: 14px;
+    font-size: var(--fs-md);
 }
 
 #now-artist {
-    font-size: 12px;
-    color: #aaa;
+    font-size: var(--fs-xs);
+    color: var(--text-secondary);
 }
-
 
 #player-controls {
     display: flex;
@@ -219,7 +350,7 @@ body {
 #player-controls button {
     background: none;
     border: none;
-    color: #fff;
+    color: var(--text-primary);
     font-size: 20px;
     cursor: pointer;
 }
@@ -251,102 +382,41 @@ body {
     justify-content: space-around;
 }
 
-/*
-
-Album Page
-
-*/
-#albums {
-    display: none;
+#now-lyrics {
+    height: 30%;
+    width: 90%;
+    overflow-y: scroll;
 }
 
-#albums-list {
-    width: 100%;
-    height: fit-content;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 32px;
-}
 
-.album-div {
-    border: 0.5px solid #3a3a3a;
-    cursor: pointer;
-    transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
-    overflow: hidden;
-    aspect-ratio: 1/1;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-.album-div:hover {
-    background: #222;
-    border-color: #555;
-    transform: translateY(-2px);
-}
-
-.album-data {
-    width: 100%;
-    height: fit-content;
-    padding: 14px;
-    background-color: #121212dc;
-}
-
-.album-name-div {
-    font-size: 14px;
-    font-weight: 500;
-    color: #fff;
-    padding-bottom: 4px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-wrap: wrap;
-}
-
-.album-artist-name-div {
-    font-size: 12px;
-    color: #888;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-wrap: wrap;
-}
-
-.artist-title-div {
-    padding-top: 30px;
-    grid-column: 1/-1;
-}
-
-/*
-Full picture
-*/
+/* ============================================================
+   7. PLAYER BAR — stato espanso (.full-picture)
+   ============================================================ */
 
 .full-picture {
     height: 100%;
 }
 
 #player-bar.full-picture {
-    bottom: 0;
-    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    overflow-y: scroll;
+    /* bottom, width già definiti sopra */
 }
 
 .song-controls.is-full-picture {
     height: fit-content;
     flex-direction: column;
     padding-top: 10px;
+    /* width: 100% già ereditato */
 }
 
 #now-album-image.is-full-picture {
-    width: 80%;
-    height: 100%;
-    aspect-ratio: 1/1;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    width: 125px;
+    height: 125px;
+    /* aspect-ratio, background-* già ereditati */
 }
 
 #player-info.is-full-picture {
@@ -354,46 +424,43 @@ Full picture
 }
 
 #player-info.is-full-picture #now-title {
-    font-weight: bold;
     font-size: 25px;
+    /* font-weight: bold già ereditato */
 }
 
 #player-info.is-full-picture #now-artist {
     font-size: 20px;
-    color: #aaa;
+    /* color già ereditato */
 }
 
 #player-controls.is-full-picture {
-    display: flex;
-    gap: 12px;
     font-size: 50px;
     justify-content: center;
+    /* display: flex, gap già ereditati */
 }
 
 #player-controls.is-full-picture button {
     font-size: 50px;
+    /* resto già ereditato */
 }
 
 #player-progress.is-full-picture {
     max-width: 100%;
     justify-content: center;
+    /* resto già ereditato */
 }
 
-#player-progress input[type=range] {
-    flex: 1;
-}
 
-.audio-controls {
-    display: flex;
-    width: 100%;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-}
+/* ============================================================
+   8. RESPONSIVE
+   ============================================================ */
 
-/* Responsive */
+@media (max-width: 768px) {
+    :root {
+        --album-min-size: 180px;
+        /* sovrascrive solo la var, #albums-list non va toccato */
+    }
 
-@media only screen and (max-width: 768px) {
     #player-bar {
         flex-direction: column;
     }
@@ -404,6 +471,7 @@ Full picture
 
     #player-progress {
         width: 100%;
+        max-width: unset;
     }
 
     .song-controls {
@@ -415,16 +483,7 @@ Full picture
     }
 
     #albums-list {
-        width: 100%;
-        height: fit-content;
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
         gap: 12px;
-    }
-}
-
-@media only screen and (min-width: 680px) {
-    #now-album-image.is-full-picture {
-        width: 20%;
+        /* grid-template-columns si aggiorna da sola via --album-min-size */
     }
 }

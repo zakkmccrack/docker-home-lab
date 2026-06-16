@@ -1,6 +1,6 @@
 # routes/metadata.py
 from flask import Blueprint, jsonify
-from db import get_track, get_all
+from db import get_track, get_all, get_track_lyrics
 
 metadata_bp = Blueprint("metadata", __name__)
 

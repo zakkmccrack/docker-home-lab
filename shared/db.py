@@ -92,6 +92,17 @@ def get_track(file_path: str) -> dict | None:
     result["tags"] = json.loads(result["tags"] or "[]")
     return result
 
+def get_track_lyrics(file_path: str) -> str | None:
+    """Ritorna il testo di una certa canzone"""
+    conn = get_db()
+    row = conn.execute(
+        "SELECT lyrics FROM track_metadata WHERE file_path = ?", (file_path,)
+    ).fetchone()
+    conn.close()
+    if not row:
+        return None
+    return row
+
 
 def get_all_paths() -> list[str]:
     """Recupera tutte le canzoni già registrate"""
