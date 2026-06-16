@@ -11,7 +11,11 @@ from functools import lru_cache
 
 from datetime import date
 
+from routes.metadata import metadata_bp
+
 app = Flask(__name__)
+
+app.register_blueprint(metadata_bp)
 
 MUSIC_DIR = os.environ.get("MUSIC_DIR", "/music")
 PLAYLISTS_FILE = "./data/playlists.json"
@@ -124,9 +128,10 @@ def next_id(playlists):
 def index():
     return send_from_directory("static", "index.html")
 
+
 @app.route("/api/status")
 def status():
-    return {'OK': 'nothing to see here'}, 200
+    return {"OK": "nothing to see here"}, 200
 
 
 @app.route("/static/<path:filename>")
