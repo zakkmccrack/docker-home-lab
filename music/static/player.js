@@ -56,6 +56,8 @@ const state = {
   randomize: false,
 };
 
+let isFullPicture = false;
+
 let max = 0;
 
 // ============================================================
@@ -440,6 +442,7 @@ playlistForm.addEventListener("submit", (e) => e.preventDefault());
 // ============================================================
 
 function loadBigPicture() {
+  isFullPicture = !isFullPicture;
   document.getElementById("player-bar").classList.toggle("full-picture");
 
   document.getElementById("song-controls").classList.toggle("is-full-picture");
@@ -458,9 +461,15 @@ function loadBigPicture() {
     .getElementById("player-controls")
     .classList.toggle("is-full-picture");
 
-  document
-    .getElementById("now-lyrics")
-    .classList.toggle("hidden");
+  if (isFullPicture) {
+    document
+      .getElementById("now-lyrics")
+      .classList.remove("hidden");
+  } else {
+    document
+      .getElementById("now-lyrics")
+      .classList.add("hidden");
+  }
 
   document
     .getElementById("app")
@@ -497,7 +506,7 @@ function updateNowPlayingUI(song, full = false) {
   nowArtist.textContent = song.artist;
   seekbar.max = song.duration;
   btnPlay.textContent = "⏸";
-  
+
   const coverUrl = coverUrlFromSong(song);
   document.title = `${song.title} - ${song.artist}`;
   if (full) { document.getElementById("player-bar").style.backgroundImage = `url(${coverUrl})`; }
@@ -545,9 +554,14 @@ async function getLyrics(song) {
   const path = "/api/track/lyrics?path=" + song;
   const res = await fetch(path);
   const raw = await res.json();
-  document.getElementById("now-lyrics").textContent = raw["lyrics"]
-}
 
+  if (!raw["error"] && isFullPicture) {
+    document.getElementById("now-lyrics").classList.remove("hidden");
+    document.getElementById("now-lyrics").textContent = raw["lyrics"]
+  } else {
+    document.getElementById("now-lyrics").classList.add("hidden");
+  }
+}
 
 // ============================================================
 //  Init
