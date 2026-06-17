@@ -51,14 +51,14 @@ def upsert_track(file_path: str, data: dict):
             VALUES
                 (:file_path, :mbid_recording, :mbid_release, :genres, :tags, :label, :country, :release_date, :lyrics, CURRENT_TIMESTAMP)
             ON CONFLICT(file_path) DO UPDATE SET
-                mbid_recording = excluded.mbid_recording,
-                mbid_release   = excluded.mbid_release,
-                genres         = excluded.genres,
-                tags           = excluded.tags,
-                label          = excluded.label,
-                country        = excluded.country,
-                release_date   = excluded.release_date,
-                lyrics         = excluded.lyrics,
+                mbid_recording = COALESCE(excluded.mbid_recording, track_metadata.mbid_recording),
+                mbid_release   = COALESCE(excluded.mbid_release,   track_metadata.mbid_release),
+                genres         = COALESCE(excluded.genres,         track_metadata.genres),
+                tags           = COALESCE(excluded.tags,           track_metadata.tags),
+                label          = COALESCE(excluded.label,          track_metadata.label),
+                country        = COALESCE(excluded.country,        track_metadata.country),
+                release_date   = COALESCE(excluded.release_date,   track_metadata.release_date),
+                lyrics         = COALESCE(excluded.lyrics,         track_metadata.lyrics),
                 last_updated   = CURRENT_TIMESTAMP
         """,
         {
@@ -106,7 +106,9 @@ def get_track_lyrics(file_path: str) -> str | None:
 def get_all_paths() -> list[str]:
     """Recupera tutte le canzoni già registrate"""
     conn = get_db()
-    rows = conn.execute("""SELECT file_path FROM track_metadata""").fetchall()
+    rows = conn.execute(
+        """SELECT file_path FROM track_metadata WHERE (lyrics IS NOT NULL AND lyrics != '') AND (genres IS NOT NULL AND genres != '[]')"""
+    ).fetchall()
     conn.close()
     return [r["file_path"] for r in rows]
 

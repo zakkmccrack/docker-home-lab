@@ -47,7 +47,7 @@ def scan_file(file_path: str):
     )
 
     if not mb_data:
-        print(f"[Scanner] Nessun risultato MB per: {tags['artist']} - {tags['title']}")
+        print(f"[Scanner] Nessun risultato MB per: {tags['artist']} - {tags['title']} - {tags['album']}")
 
     lyrics = get_lyrics(tags["artist"], tags["title"])
 

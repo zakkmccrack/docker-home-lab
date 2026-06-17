@@ -1,5 +1,6 @@
 import requests
 import time
+import urllib.parse
 
 BASE_URL = "https://musicbrainz.org/ws/2"
 HEADERS = {"User-Agent": "MusicPlayerWorker/1.0 (zaganelli.alessandro.wm@email.com)"}
@@ -83,7 +84,19 @@ def fetch_metadata(artist: str, title: str, album: str = None) -> dict:
     Entry point unica per il worker.
     Ritorna tutto quello che serve in un colpo solo.
     """
-    mbid_recording, mbid_release = search_recording(artist, title, album)
+    stopwords = ["(Remastered)", "(Deluxe)", "(Extended)"]
+
+    querywords = title.split()
+    resultwords = [word for word in querywords if word.lower() not in stopwords]
+    title_result = " ".join(resultwords)
+
+    querywords2 = album.split()
+    resultwords2 = [word for word in querywords2 if word.lower() not in stopwords]
+    album_result = " ".join(resultwords2)
+
+    print(f"[MusicBrainz] Searching {artist}: {title_result} from {album_result}")
+
+    mbid_recording, mbid_release = search_recording(artist, title_result, album_result)
     time.sleep(1)
 
     if not mbid_recording:
