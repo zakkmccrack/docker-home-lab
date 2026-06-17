@@ -40,7 +40,7 @@ services:
       - DB_PATH=/data/metadata.db
     volumes:
       #path alla cartella locale con tutti gli artisti/album/canzoni
-      - /home/zakkmccrack/Music/Musica:/music:ro
+      - /${MUSIC_DIR}:/music:ro
       #file delle playlist montato a runtime
       - ./shared/db.py:/app/db.py
       - ./data:/data
@@ -49,7 +49,7 @@ services:
     build: ./metadata-worker
     container_name: metadata_service
     volumes:
-      - /home/zakkmccrack/Music/Musica:/music:ro
+      - ${MUSIC_DIR}:/music:ro
       - ./shared/db.py:/app/db.py
       - ./data:/data
     environment:

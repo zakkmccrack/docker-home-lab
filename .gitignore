@@ -1,2 +1,2 @@
 data/*
-!data/playlists.json
+.env
