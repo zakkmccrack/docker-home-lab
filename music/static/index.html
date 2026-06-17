@@ -68,7 +68,7 @@
 
                 <hr>
                 <button onclick="goSearchPage()"><span>⌕</span> Search</button>
-                <button onclick="goCreatePlaylistPage()"><span>+</span> Create Playlist</button>
+                <button onclick="goCreatePlaylistPage()"><span>+</span> Playlist</button>
 
                 <button onclick="goSettings()"><span>⚙</span> Settings - Empty</button>
             </div>
@@ -133,21 +133,38 @@
             </div>
         </div>
 
-        <div id="create-playlist">
-            <form id="playlist-form" method="post">
-                <input type="text" name="playlist-name" id="playlist-name">
-                <select name="song-selection" id="song-selection" multiple></select>
-                <button type="submit">Crea Playlist</button>
-            </form>
+        <div id="playlist" class="pt-20 min-h-full h-fit">
+            <div id="all-playlist" class="w-full h-fit">
+
+            </div>
+            <div id="create-playlist" class="h-2/3">
+                <form id="playlist-form" method="POST" class="w-full flex flex-col justify-around items-center">
+                    <div>
+                        <input type="text" placeholder="Playlist Name" name="playlist-name" id="playlist-name"
+                            class="bg-zinc-800 text-white">
+                    </div>
+                    <div class="flex flex-col py-7">
+                        <input type="text" placeholder="Search Song" id="myInput" onkeyup="filterFunction()"
+                            class="bg-zinc-800 text-white p-3">
+                        <select name="song-selection" id="song-selection" multiple
+                            class="bg-zinc-800 text-white h-3/5 p-5 border-t border-t-zinc-400 text-xl"></select>
+                    </div>
+                    <div id="current-list"></div>
+                    <div><button type="submit">Crea Playlist</button></div>
+                </form>
+            </div>
+
         </div>
 
         <div id="settings">
         </div>
     </div>
+
     <audio id="audio-engine"></audio>
+
     <script src="/static/player.js"></script>
     <script src="/static/general.js"></script>
-
+    <script src="/static/playlist.js"></script>
 </body>
 
 </html>

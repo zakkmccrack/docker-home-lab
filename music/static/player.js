@@ -25,8 +25,6 @@ const searchInput = document.getElementById("search");
 const songsNumber = document.getElementById("songs-number");
 const songsNumberSearch = document.getElementById("songs-number-serach");
 
-const playlistForm = document.getElementById("playlist-form");
-
 const albumGenreList = document.getElementById("album-genre-list");
 
 const COVER_API = "/music/api/cover/";
@@ -439,8 +437,6 @@ seekbar.addEventListener("input", () => {
 
 navigator.mediaSession.setActionHandler("nexttrack", playNext);
 navigator.mediaSession.setActionHandler("previoustrack", playPrev);
-
-playlistForm.addEventListener("submit", (e) => e.preventDefault());
 
 // ============================================================
 //  GUI extra
