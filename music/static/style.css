@@ -19,12 +19,8 @@ body {
     height: 100vh;
 }
 
-.hidden {
-    display: none;
-}
-
 .scroll-hidden {
-    overflow-y: hidden;
+    overflow-y: hidden !important;
 }
 
 
@@ -72,24 +68,9 @@ body {
    3. HOME PAGE
    ============================================================ */
 
-#home {
-    padding: 2rem 1rem;
-    max-width: 360px;
-}
-
 .home-label {
-    font-size: var(--fs-sm);
     color: var(--text-muted);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    font-weight: 500;
     margin: 0 0 1.25rem;
-}
-
-#home-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
 }
 
 #home-buttons hr {
@@ -128,26 +109,21 @@ body {
    4. LIBRARY
    ============================================================ */
 
-#library {
+.library {
     flex: 1;
     overflow-y: auto;
     padding-bottom: 500px;
 }
 
+#header-activate-button {
+    display: none;
+}
+
 /* Header */
 
 #library-header {
-    position: fixed;
     display: flex;
-    align-items: center;
-    gap: 4px;
-    border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
-    background-color: #000;
-    padding-bottom: 0;
-}
-
-#songs-number {
-    padding-top: 50px;
+    transition: all 1s ease;
 }
 
 #library-header button {
@@ -187,11 +163,6 @@ body {
 }
 
 /* Song table */
-
-#song-table {
-    width: 100%;
-    border-collapse: collapse;
-}
 
 #song-table th {
     text-align: left;
@@ -234,7 +205,7 @@ body {
     display: none;
 }
 
-#albums-list {
+.artist-div {
     width: 100%;
     height: fit-content;
     display: grid;
@@ -256,7 +227,6 @@ body {
 .album-div:hover {
     background: #222;
     border-color: var(--border-card-hover);
-    transform: translateY(-2px);
 }
 
 .album-data {
@@ -273,7 +243,6 @@ body {
     padding-bottom: 4px;
     overflow: hidden;
     text-overflow: ellipsis;
-    /* rimosso white-space: nowrap + text-wrap: wrap che si annullavano a vicenda */
 }
 
 .album-artist-name-div {
@@ -281,7 +250,6 @@ body {
     color: var(--text-muted);
     overflow: hidden;
     text-overflow: ellipsis;
-    /* stessa cosa */
 }
 
 .artist-title-div {
@@ -295,56 +263,9 @@ body {
    ============================================================ */
 
 #player-bar {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background: var(--bg-elevated);
-    border-top: 1px solid var(--border-default);
-    padding: 8px 12px;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
-    gap: 10px;
-    background-position: center;
-    background-size: cover;
-}
-
-.song-controls {
-    display: flex;
-    width: 100%;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-}
-
-#now-album-image {
-    width: 100px;
-    height: 100px;
-    aspect-ratio: 1 / 1;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-#player-info {
-    display: flex;
-    flex-direction: column;
-    min-width: 180px;
-}
-
-#now-title {
-    font-weight: bold;
-    font-size: var(--fs-md);
-}
-
-#now-artist {
-    font-size: var(--fs-xs);
-    color: var(--text-secondary);
-}
-
-#player-controls {
-    display: flex;
-    gap: 12px;
 }
 
 #player-controls button {
@@ -355,31 +276,11 @@ body {
     cursor: pointer;
 }
 
-#player-progress {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    max-width: 20%;
-    flex: 1;
-}
-
-#player-progress input[type=range] {
-    flex: 1;
-}
-
 #player-volume {
     display: flex;
     align-items: center;
     gap: 8px;
     min-width: 100px;
-}
-
-.audio-controls {
-    display: flex;
-    width: 100%;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
 }
 
 #now-lyrics {
@@ -403,20 +304,17 @@ body {
     justify-content: space-around;
     align-items: center;
     overflow-y: scroll;
-    /* bottom, width già definiti sopra */
 }
 
 .song-controls.is-full-picture {
     height: fit-content;
     flex-direction: column;
     padding-top: 10px;
-    /* width: 100% già ereditato */
 }
 
 #now-album-image.is-full-picture {
     width: 125px;
     height: 125px;
-    /* aspect-ratio, background-* già ereditati */
 }
 
 #player-info.is-full-picture {
@@ -425,29 +323,24 @@ body {
 
 #player-info.is-full-picture #now-title {
     font-size: 25px;
-    /* font-weight: bold già ereditato */
 }
 
 #player-info.is-full-picture #now-artist {
     font-size: 20px;
-    /* color già ereditato */
 }
 
 #player-controls.is-full-picture {
     font-size: 50px;
     justify-content: center;
-    /* display: flex, gap già ereditati */
 }
 
 #player-controls.is-full-picture button {
     font-size: 50px;
-    /* resto già ereditato */
 }
 
 #player-progress.is-full-picture {
     max-width: 100%;
     justify-content: center;
-    /* resto già ereditato */
 }
 
 
@@ -458,7 +351,6 @@ body {
 @media (max-width: 768px) {
     :root {
         --album-min-size: 180px;
-        /* sovrascrive solo la var, #albums-list non va toccato */
     }
 
     #player-bar {
@@ -469,21 +361,29 @@ body {
         display: none;
     }
 
-    #player-progress {
-        width: 100%;
-        max-width: unset;
+    .artist-div {
+        gap: 20px
     }
 
-    .song-controls {
-        justify-content: space-around;
+    .album-div {
+        aspect-ratio: initial;
+        height: 100px;
     }
 
-    .audio-controls {
+    .album-data {
+        height: 100%;
+    }
+
+    #header-activate-button {
         display: block;
     }
 
-    #albums-list {
-        gap: 12px;
-        /* grid-template-columns si aggiorna da sola via --album-min-size */
+    #library-header {
+        display: none;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        justify-content: space-around;
+        width: 100%;
     }
 }
