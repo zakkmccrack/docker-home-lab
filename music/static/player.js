@@ -27,6 +27,8 @@ const songsNumberSearch = document.getElementById("songs-number-serach");
 
 const playlistForm = document.getElementById("playlist-form");
 
+const albumGenreList = document.getElementById("album-genre-list");
+
 const COVER_API = "/music/api/cover/";
 
 // ============================================================
@@ -464,11 +466,19 @@ function loadBigPicture() {
     .getElementById("player-controls")
     .classList.toggle("is-full-picture");
 
+  document.getElementById('player-main').classList.toggle('is-full-picture');
+
   if (isFullPicture) {
+    document
+      .getElementById("now-metadata")
+      .classList.remove("hidden");
     document
       .getElementById("now-lyrics")
       .classList.remove("hidden");
   } else {
+    document
+      .getElementById("now-metadata")
+      .classList.add("hidden");
     document
       .getElementById("now-lyrics")
       .classList.add("hidden");
@@ -518,7 +528,8 @@ function updateNowPlayingUI(song, full = false) {
   }
 
 
-  getLyrics(song.filepath)
+  getLyricsAndMetadata(song.filepath)
+
 
   navigator.mediaSession.metadata = new MediaMetadata({
     title: song.title,
@@ -553,18 +564,38 @@ function playPrev() {
 //  Lyrics
 // ============================================================
 
-async function getLyrics(song) {
-  const path = "/api/track/lyrics?path=" + song;
-  const res = await fetch(path);
+async function getLyricsAndMetadata(song) {
+  const res = await fetch("/api/track/metadata?path=" + song);
   const raw = await res.json();
-
+  const res2 = await fetch("/api/track/lyrics?path=" + song);
+  const raw2 = await res2.json();
   if (!raw["error"] && isFullPicture) {
     document.getElementById("now-lyrics").classList.remove("hidden");
-    document.getElementById("now-lyrics").textContent = raw["lyrics"]
+    document.getElementById("now-lyrics").textContent = raw2["lyrics"]
+    document.getElementById("now-metadata").classList.remove("hidden");
+    document.getElementById("now-metadata").textContent = raw["genres"]
   } else {
     document.getElementById("now-lyrics").classList.add("hidden");
+    document.getElementById("now-metadata").classList.add("hidden");
+
   }
 }
+
+// ============================================================
+//  Genres
+// ============================================================
+
+// async function loadGenresPage() {
+//   albumGenreList.innerHTML = "";
+//   const results = await Promise.all(
+//     state.library.map(async (song) => {
+//       const res = await fetch("/api/track/metadata?path=" + encodeCoverPath(song.filepath));
+//       return res.json();
+//     })
+//   );
+//   console.log(results);
+// }
+
 
 // ============================================================
 //  Init

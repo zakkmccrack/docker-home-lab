@@ -1,7 +1,7 @@
 const header = document.getElementById("library-header");
 const openButton = document.getElementById("header-activate-button");
 
-const PAGES = ['home', 'all-player', 'albums', 'playlists', 'search_tab', 'settings', 'create-playlist'];
+const PAGES = ['home', 'all-player', 'albums', 'playlists', 'search_tab', 'settings', 'create-playlist', 'genres'];
 
 
 
@@ -33,6 +33,9 @@ function goCreatePlaylistPage() { loadSongSelection(); showPage('create-playlist
 function showBigPicture() { loadBigPicture(); }
 
 goHomePage();
+
+// async function goGenresPage() { await loadGenresPage(); showPage('genres'); startNavbar()}
+
 
 function startNavbar() {
     let vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)

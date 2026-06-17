@@ -284,11 +284,15 @@ body {
 }
 
 #now-lyrics {
-    height: 30%;
+    height: 100%;
     width: 90%;
     overflow-y: scroll;
+    text-wrap: wrap
 }
 
+#now-metadata {
+    text-wrap: wrap;
+}
 
 /* ============================================================
    7. PLAYER BAR — stato espanso (.full-picture)
@@ -296,17 +300,34 @@ body {
 
 .full-picture {
     height: 100%;
+    overflow: scroll;
 }
 
 #player-bar.full-picture {
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: center;
     overflow-y: scroll;
 }
 
-.song-controls.is-full-picture {
+#player-bar.full-picture #player-main {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#song-controls.is-full-picture {
+    height: fit-content;
+    flex-direction: column;
+    padding-top: 10px;
+}
+
+#audio-controls.is-full-picture {
     height: fit-content;
     flex-direction: column;
     padding-top: 10px;

@@ -23,32 +23,39 @@
         </div>
 
         <div id="player-bar" class="fixed bottom-0 w-full bg-neutral-900 border-t border-neutral-700 px-2 py-3 gap-2.5">
-            <div id="song-controls" class="flex w-full flex-row items-center justify-around">
-                <div id="now-album-image" class="min-w-28 min-h-28 aspect-square bg-cover bg-center bg-no-repeat">
+            <div id="player-main">
+                <div id="song-controls" class="flex w-full flex-row items-center justify-around">
+                    <div id="now-album-image" class="min-w-28 min-h-28 aspect-square bg-cover bg-center bg-no-repeat">
+                    </div>
+                    <div id="player-info" class="flex flex-col min-w-45">
+                        <span id="now-title" class="font-bold text-lg">Nessun brano</span>
+                        <span id="now-artist" class="text-md"></span>
+                    </div>
                 </div>
-                <div id="player-info" class="flex flex-col min-w-45">
-                    <span id="now-title" class="font-bold text-lg">Nessun brano</span>
-                    <span id="now-artist" class="text-md"></span>
-                </div>
-            </div>
-            <div id="audio-controls" class="md:flex block w-full flex-row items-center justify-around">
-                <div id="player-controls" class="flex gap-3">
-                    <button id="btn-random">⤨</button>
-                    <button id="btn-prev">⏮</button>
-                    <button id="btn-play">▶</button>
-                    <button id="btn-next">⏭</button>
-                </div>
-                <div id="player-progress" class="flex items-center gap-2 md:max-w-2/10 w-full flex-1">
-                    <span id="time-current">0:00</span>
-                    <input type="range" id="seekbar" value="0" min="0" step="1" class="flex-1">
-                    <span id="time-total">0:00</span>
-                </div>
-                <!-- <div id="player-volume">
+                <div id="audio-controls" class="md:flex block w-full flex-row items-center justify-around">
+                    <div id="player-controls" class="flex gap-3">
+                        <button id="btn-random">⤨</button>
+                        <button id="btn-prev">⏮</button>
+                        <button id="btn-play">▶</button>
+                        <button id="btn-next">⏭</button>
+                    </div>
+                    <div id="player-progress" class="flex items-center gap-2 md:max-w-2/10 w-full flex-1">
+                        <span id="time-current">0:00</span>
+                        <input type="range" id="seekbar" value="0" min="0" step="1" class="flex-1">
+                        <span id="time-total">0:00</span>
+                    </div>
+                    <!-- <div id="player-volume">
                     <span>🔊</span>
                     <input type="range" id="volumebar" value="100" min="0" max="100">
                 </div> -->
+                </div>
             </div>
-            <pre id="now-lyrics" class="hidden"></pre>
+            <div class="pb-5">
+                <pre id="now-metadata" class="hidden"></pre>
+            </div>
+            <div class="h-1/2 border-t border-t-zinc-500">
+                <pre id="now-lyrics" class="hidden"></pre>
+            </div>
         </div>
 
         <div id="home" class="px-8 py-4">
@@ -57,6 +64,8 @@
                 <button onclick="goMainPage()"><span>♫</span> All Songs</button>
                 <button onclick="goAlbumPage()"><span>◉</span> Albums</button>
                 <button onclick="goPlaylistsPage()"><span>☰</span> Playlists</button>
+                <button onclick="goGenresPage()"><span>☰</span> Album Per Generi</button>
+
                 <hr>
                 <button onclick="goSearchPage()"><span>⌕</span> Search</button>
                 <button onclick="goCreatePlaylistPage()"><span>+</span> Create Playlist</button>
@@ -64,6 +73,15 @@
                 <button onclick="goSettings()"><span>⚙</span> Settings - Empty</button>
             </div>
         </div>
+
+        <!-- <div id="genres">
+            <div class="library">
+                <div id="album-genre-list">
+                    tyhis
+                </div>
+                </table>
+            </div>
+        </div> -->
 
         <div id="all-player">
             <div class="library">

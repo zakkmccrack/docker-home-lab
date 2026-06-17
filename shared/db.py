@@ -77,20 +77,19 @@ def upsert_track(file_path: str, data: dict):
     conn.close()
 
 
-def get_track(file_path: str) -> dict | None:
+def get_track_data(file_path: str) -> dict | None:
     """Ritorna i dati di una certa canzone"""
     conn = get_db()
     row = conn.execute(
-        "SELECT * FROM track_metadata WHERE file_path = ?", (file_path,)
+        "SELECT genres FROM track_metadata WHERE file_path = ?", (file_path,)
     ).fetchone()
     conn.close()
     if not row:
         return None
 
     result = dict(row)
-    result["genres"] = json.loads(result["genres"] or "[]")
-    result["tags"] = json.loads(result["tags"] or "[]")
     return result
+
 
 def get_track_lyrics(file_path: str) -> str | None:
     """Ritorna il testo di una certa canzone"""
@@ -101,7 +100,7 @@ def get_track_lyrics(file_path: str) -> str | None:
     conn.close()
     if not row:
         return None
-    return row
+    return dict(row)
 
 
 def get_all_paths() -> list[str]:
@@ -110,6 +109,7 @@ def get_all_paths() -> list[str]:
     rows = conn.execute("""SELECT file_path FROM track_metadata""").fetchall()
     conn.close()
     return [r["file_path"] for r in rows]
+
 
 def get_all() -> list[str]:
     """Recupera tutte le canzoni già registrate"""
