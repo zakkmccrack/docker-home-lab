@@ -271,10 +271,12 @@ function renderTree() {
   const frag = document.createDocumentFragment();
 
   state.treeFiltered.forEach(([artist, albums], bandIndex) => {
+    const artistContainer = document.createElement("div");
+    artistContainer.classList.add("artist-div")
     const artistDiv = document.createElement("div");
     artistDiv.classList.add("artist-title-div");
     artistDiv.innerHTML = `<h2>${artist}</h2>`;
-    frag.appendChild(artistDiv);
+    artistContainer.appendChild(artistDiv);
 
     Object.keys(albums).forEach((albumName) => {
       const div = document.createElement("div");
@@ -289,7 +291,8 @@ function renderTree() {
       `;
       div.appendChild(dataDiv);
       div.addEventListener("click", () => playAlbum(bandIndex, albumName));
-      frag.appendChild(div);
+      artistContainer.appendChild(div);
+      frag.appendChild(artistContainer)
     });
   });
 
