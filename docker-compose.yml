@@ -38,6 +38,7 @@ services:
       - PYTHONUNBUFFERED=1
       - MUSIC_DIR=/music
       - DB_PATH=/data/metadata.db
+      - PS_PATH=/data/playlists.json
     volumes:
       #path alla cartella locale con tutti gli artisti/album/canzoni
       - /${MUSIC_DIR}:/music:ro

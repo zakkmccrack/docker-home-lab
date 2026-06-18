@@ -5,6 +5,7 @@ const allPlaylistSettingsDiv = document.getElementById("all-playlist");
 const playlistForm = document.getElementById("playlist-form");
 const selectBox = document.getElementById("song-selection");
 const currentList = document.getElementById("current-list");
+const title = document.getElementById('playlist-name');
 
 let library;
 let libraryFiltered;
@@ -74,6 +75,25 @@ function triggerSongOnSelected(path, title) {
 
 async function loadSettingsPlaylist() {
 
+}
+
+function createPlaylistPost() {
+    if (selected[0] == "") { selected.shift() }
+    if (selected.length >= 2) {
+        name = title.value;
+        fetch("/api/playlists", {
+            method: "POST",
+            body: JSON.stringify({
+                name: name,
+                songs: selected
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        })
+            .then((response) => response.json())
+            .then((json) => console.log(json));
+    }
 }
 
 async function renderSettingsPlaylists() {

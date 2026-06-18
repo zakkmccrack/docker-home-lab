@@ -22,7 +22,7 @@ function goMainPage() { showPage('all-player', 'home'); startNavbar(); }
 
 function goAlbumPage() { renderTree(); showPage('albums', 'albums'); startNavbar(); }
 
-function goPlaylistsPage() { loadPlaylists(); showPage('playlists', 'playlists'); }
+function goPlaylistsPage() { loadPlaylists(); showPage('playlists', 'playlists'); startNavbar(); }
 
 function goSearchPage() { showPage('search_tab', 'search'); startNavbar(); }
 
@@ -30,7 +30,7 @@ function goSettings() { showPage('settings'); startNavbar(); }
 
 function goCreatePlaylistPage() { populateInsertLibrary(); showPage('playlist'); startNavbar(); }
 
-function showBigPicture() { loadBigPicture(); }
+function showBigPicture() { loadBigPicture(); startNavbar(); }
 
 goHomePage();
 

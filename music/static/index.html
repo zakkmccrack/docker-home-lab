@@ -32,7 +32,7 @@
                         <span id="now-artist" class="text-md"></span>
                     </div>
                 </div>
-                <div id="audio-controls" class="md:flex block w-full flex-row items-center justify-around">
+                <div id="audio-controls" class="block w-full items-center justify-around">
                     <div id="player-controls" class="flex gap-3">
                         <button id="btn-random">⤨</button>
                         <button id="btn-prev">⏮</button>
@@ -115,7 +115,7 @@
         <div id="playlists">
             <div class="library">
                 <input type="text" class="search" id="playlist-search" placeholder="Cerca">
-                <div id="playlists-list">
+                <div id="playlists-list" class="w-full h-fit pb-80 flex flex-row flex-wrap justify-around">
                 </div>
             </div>
         </div>
@@ -150,8 +150,8 @@
                             class="bg-zinc-800 text-white h-3/5 p-5 border-t border-t-zinc-400 text-xl"></select>
                     </div>
                     <div id="current-list"></div>
-                    <div><button type="submit">Crea Playlist</button></div>
                 </form>
+                <div><button onclick="createPlaylistPost()">Crea Playlist</button></div>
             </div>
 
         </div>
