@@ -25,8 +25,6 @@ const searchInput = document.getElementById("search");
 const songsNumber = document.getElementById("songs-number");
 const songsNumberSearch = document.getElementById("songs-number-serach");
 
-const playlistForm = document.getElementById("playlist-form");
-
 const albumGenreList = document.getElementById("album-genre-list");
 
 const COVER_API = "/music/api/cover/";
@@ -277,7 +275,7 @@ function renderTree() {
     artistContainer.classList.add("artist-div")
     const artistDiv = document.createElement("div");
     artistDiv.classList.add("artist-title-div");
-    artistDiv.innerHTML = `<h2>${artist}</h2>`;
+    artistDiv.innerHTML = `<h2 class="text-2xl">${artist}</h2>`;
     artistContainer.appendChild(artistDiv);
 
     Object.keys(albums).forEach((albumName) => {
@@ -305,11 +303,11 @@ function renderPlaylists() {
   playlistsList.innerHTML = "";
   const frag = document.createDocumentFragment();
 
-  state.playlists.forEach(([name, songs]) => {
+  state.playlists.forEach((playlist) => {
     const div = document.createElement("div");
-    div.classList.add("album-div");
-    div.innerHTML = `<div class="album-name-div">${name}</div>`;
-    div.addEventListener("click", () => startPlaylist(songs));
+    div.classList.add("playlist-div");
+    div.innerHTML = `<div class="w-25 aspect-square felx flex-row justify-center items-center p-4">${playlist[1].name}</div>`;
+    div.addEventListener("click", () => startPlaylist(playlist[1].songs));
     frag.appendChild(div);
   });
 
@@ -427,6 +425,7 @@ audio.addEventListener("ended", playNext);
 audio.addEventListener("timeupdate", () => {
   seekbar.value = Math.floor(audio.currentTime);
   timeCurrent.textContent = fmt(audio.currentTime);
+  handleInput(seekbar);
 });
 
 audio.addEventListener("loadedmetadata", () => {
@@ -440,7 +439,15 @@ seekbar.addEventListener("input", () => {
 navigator.mediaSession.setActionHandler("nexttrack", playNext);
 navigator.mediaSession.setActionHandler("previoustrack", playPrev);
 
-playlistForm.addEventListener("submit", (e) => e.preventDefault());
+
+const handleInput = (el) => {
+  const min = el.min || 0;
+  const max = el.max || 100;
+  const pct = (el.value - min) / (max - min) * 100;
+  el.style.setProperty('--range-pct', pct + '%');
+};
+
+seekbar.addEventListener('input', (e) => handleInput(e.target));
 
 // ============================================================
 //  GUI extra

@@ -18,7 +18,7 @@ app = Flask(__name__)
 app.register_blueprint(metadata_bp)
 
 MUSIC_DIR = os.environ.get("MUSIC_DIR", "/music")
-PLAYLISTS_FILE = "./data/playlists.json"
+PLAYLISTS_FILE = os.environ.get("PS_PATH", "/data/playlists.json")
 
 library = []
 library_tree = {}
@@ -118,7 +118,7 @@ def write_playlists(data):
 def next_id(playlists):
     if not playlists:
         return 1
-    return max(p["id"] for p in playlists) + 1
+    return max(int(p) for p in playlists) + 1
 
 
 # --- Routes ---
@@ -181,13 +181,14 @@ def create_playlist():
         return jsonify({"error": "nome mancante"}), 400
 
     data = read_playlists()
+    print(data)
     playlist = {
         "id": next_id(data["playlists"]),
         "name": body["name"],
         "created_at": str(date.today()),
         "songs": body.get("songs", []),
     }
-    data["playlists"].append(playlist)
+    data["playlists"][(playlist["id"])] = playlist;
     write_playlists(data)
     return jsonify(playlist), 201
 
