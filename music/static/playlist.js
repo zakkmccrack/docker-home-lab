@@ -35,7 +35,7 @@ function loadSongSelection() {
         const filepathOriginal = song.filepath;
         optionBox.value = (filepathOriginal.replace("/music", ''));
         optionBox.textContent = song.title + " || " + song.album + " || " + song.artist;
-        optionBox.addEventListener("dblclick", () => { triggerSongOnSelected(optionBox.value, song.title) })
+        optionBox.addEventListener("click", () => { triggerSongOnSelected(optionBox.value, song.title) })
         fragment.appendChild(optionBox);
     });
     selectBox.appendChild(fragment);
@@ -93,7 +93,20 @@ function createPlaylistPost() {
         })
             .then((response) => response.json())
             .then((json) => console.log(json));
+    } else {
+        var result = [];
+        var opt;
+
+        for (var i = 0, iLen = selectBox.options.length; i < iLen; i++) {
+            opt = selectBox.options[i];
+
+            if (opt.selected) {
+                result.push(opt.value);
+            }
+        }
+        selected = result;
     }
+
 }
 
 async function renderSettingsPlaylists() {

@@ -64,13 +64,12 @@
                 <button onclick="goMainPage()"><span>♫</span> All Songs</button>
                 <button onclick="goAlbumPage()"><span>◉</span> Albums</button>
                 <button onclick="goPlaylistsPage()"><span>☰</span> Playlists</button>
-                <button onclick="goGenresPage()"><span>☰</span> Album Per Generi</button>
-
+                <!-- <button onclick="goGenresPage()"><span>☰</span> Album Per Generi</button> -->
                 <hr>
                 <button onclick="goSearchPage()"><span>⌕</span> Search</button>
                 <button onclick="goCreatePlaylistPage()"><span>+</span> Playlist</button>
 
-                <button onclick="goSettings()"><span>⚙</span> Settings - Empty</button>
+                <!-- <button onclick="goSettings()"><span>⚙</span> Settings - Empty</button> -->
             </div>
         </div>
 
@@ -121,7 +120,7 @@
         </div>
 
         <div id="search_tab">
-            <div class="library">
+            <div class="library pt-20">
                 <input type="text" class="search" id="search" placeholder="Cerca">
                 <div id="songs-number-serach">
                 </div>
@@ -147,7 +146,7 @@
                         <input type="text" placeholder="Search Song" id="myInput" onkeyup="filterFunction()"
                             class="bg-zinc-800 text-white p-3">
                         <select name="song-selection" id="song-selection" multiple
-                            class="bg-zinc-800 text-white h-3/5 p-5 border-t border-t-zinc-400 text-xl"></select>
+                            class="bg-zinc-800 text-white h-3/5 w-full p-5 border-t border-t-zinc-400 text-xl"></select>
                     </div>
                     <div id="current-list"></div>
                 </form>
